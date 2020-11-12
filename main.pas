@@ -12,7 +12,12 @@ type
   Channel = record
     R, G, B: Byte;
   end;
-  Kernel = array[1..3, 1..3] of Integer;
+  ChannelDouble = record
+    R, G, B: Real;
+  end;
+
+  Kernel = array[-1..1, -1..1] of Real;
+  SE = array[-1..1, -1..1] of Integer;
   BitmapColor = array[0..1000, 0..1000] of Channel;
   BitmapGrayscale = array[0..1000, 0..1000] of Byte;
 
@@ -26,6 +31,7 @@ type
     ButtonObject: TButton;
     ButtonExecute: TButton;
     ButtonSave: TButton;
+    Edit1: TEdit;
     ImagePattern: TImage;
     ImageTexture1: TImage;
     ImageTexture2: TImage;
@@ -45,8 +51,13 @@ type
     function InitImageBitmap(image: TImage): BitmapColor;
     procedure ShowImageFromBitmap(bitmap: BitmapColor);
     procedure ShowImageFromBitmap(bitmap: BitmapGrayscale);
+    function Constrain(value: Integer): Byte;
     function Grayscaling(bitmap: BitmapColor): BitmapGrayscale;
     function Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;
+    function PaddingBitmap(bitmap: BitmapColor): BitmapColor;
+    function LPFKernel(): Kernel;
+    function LPF(padBitmap: BitmapColor): BitmapColor;
+
 
   public
 
@@ -69,6 +80,7 @@ var
   BitmapBinaryImage: BitmapGrayscale;
   imageWidth: Integer = 300;
   imageHeight: Integer = 300;
+  KSize: Integer = 3;
 
 procedure TFormMain.ButtonPatternClick(Sender: TObject);
 begin
@@ -100,7 +112,7 @@ end;
 
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
 begin
-  ShowImageFromBitmap(Binarization(Grayscaling(BitmapPattern), 127));
+  ShowImageFromBitmap(LPF(PaddingBitmap(BitmapPattern)));
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -200,6 +212,7 @@ begin
   end;
   Grayscaling:= BitmapTemp;
 end;
+
 function TFormMain.Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;
 var
   x, y: Integer;
@@ -216,6 +229,81 @@ begin
     end;
   end;
   Binarization:= BitmapTemp;
+end;
+
+function TFormMain.PaddingBitmap(bitmap: BitmapColor): BitmapColor;
+var
+  x, y: Integer;
+  BitmapTemp: BitmapColor;
+begin
+  BitmapTemp:= bitmap;
+  for y:= 1 to imageHeight do
+  begin
+    BitmapTemp[0, y]:= BitmapTemp[1, y];
+    BitmapTemp[imageWidth+1, y]:= BitmapTemp[imageWidth, y];
+  end;
+
+  for x:= 0 to imageWidth+1 do
+  begin
+    BitmapTemp[x, 0]:= BitmapTemp[x, 1];
+    BitmapTemp[x, imageHeight+1]:= BitmapTemp[x, imageHeight];
+  end;
+  PaddingBitmap:= BitmapTemp;
+end;
+
+function TFormMain.LPFKernel(): Kernel;
+var
+  x, y: Integer;
+  KernelTemp: Kernel;
+begin
+  for y:= -1 to 1 do
+  begin
+    for x:= -1 to 1 do
+    begin
+      KernelTemp[x, y]:= 1 / 9;
+    end;
+  end;
+  LPFKernel:= KernelTemp;
+end;
+
+function TFormMain.LPF(padBitmap: BitmapColor): BitmapColor;
+var
+  x, y: Integer;
+  kx, ky: Integer;
+  K: Kernel;
+  ResultBitmap: BitmapColor;
+  pixel: ChannelDouble;
+begin
+  K:= LPFKernel();
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      pixel.R:= 0;
+      pixel.G:= 0;
+      pixel.B:= 0;
+      for ky:= -1 to 1 do
+      begin
+        for kx:= -1 to 1 do
+        begin
+          pixel.R:= pixel.R + (padBitmap[x-kx, y-ky].R * K[kx, ky]);
+          pixel.G:= pixel.G + (padBitmap[x-kx, y-ky].G * K[kx, ky]);
+          pixel.B:= pixel.B + (padBitmap[x-kx, y-ky].B * K[kx, ky]);
+        end;
+      end;
+      ResultBitmap[x, y].R:= Constrain(Round(pixel.R));
+      ResultBitmap[x, y].G:= Constrain(Round(pixel.G));
+      ResultBitmap[x, y].B:= Constrain(Round(pixel.B));
+    end;
+  end;
+  LPF:= ResultBitmap;
+end;
+
+function TFormMain.Constrain(value: Integer): byte;
+begin
+  if value < 0 then Constrain := 0
+  else if value > 255 then Constrain := 255
+  else Constrain := value;
 end;
 
 end.

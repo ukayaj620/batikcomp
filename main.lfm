@@ -99,6 +99,14 @@ object FormMain: TFormMain
     Top = 432
     Width = 504
   end
+  object Edit1: TEdit
+    Left = 1208
+    Height = 33
+    Top = 656
+    Width = 120
+    TabOrder = 6
+    Text = 'Edit1'
+  end
   object SavePictureDialog1: TSavePictureDialog
     left = 1524
     top = 120

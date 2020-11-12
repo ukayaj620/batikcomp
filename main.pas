@@ -5,10 +5,25 @@ unit main;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls;
 
 type
-  TForm1 = class(TForm)
+
+  { TFormMain }
+
+  TFormMain = class(TForm)
+    Bevel1: TBevel;
+    ButtonPattern: TButton;
+    ButtonTexture1: TButton;
+    ButtonTexture2: TButton;
+    ButtonObject: TButton;
+    ButtonExecute: TButton;
+    ButtonSave: TButton;
+    ImagePattern: TImage;
+    ImageTexture1: TImage;
+    ImageTexture2: TImage;
+    ImageObject: TImage;
+    Image5: TImage;
   private
 
   public
@@ -16,7 +31,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  FormMain: TFormMain;
 
 implementation
 

@@ -18,9 +18,10 @@ type
 
   Kernel = array[-1..1, -1..1] of Real;
   KernelInt = array[-1..1, -1..1] of Integer;
-  SE = array[-1..1, -1..1] of Integer;
+  SE = array[-1..1, -1..1] of Byte;
   BitmapColor = array[0..1000, 0..1000] of Channel;
   BitmapGrayscale = array[0..1000, 0..1000] of Byte;
+  BitmapBinary = array[0..1000, 0..1000] of Boolean;
   FourWays = array[1..4] of KernelInt;
 
   { TFormMain }
@@ -53,15 +54,19 @@ type
     function InitImageBitmap(image: TImage): BitmapColor;
     procedure ShowImageFromBitmap(bitmap: BitmapColor);
     procedure ShowImageFromBitmap(bitmap: BitmapGrayscale);
+    procedure ShowImageFromBitmap(bitmap: BitmapBinary);
     function Constrain(value: Integer): Byte;
     function Grayscaling(bitmap: BitmapColor): BitmapGrayscale;
     function Invers(bitmap: BitmapGrayscale): BitmapGrayscale;
-    function Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;
+    function Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapBinary;
     function PaddingBitmap(bitmap: BitmapColor): BitmapColor;
     function PaddingBitmap(bitmap: BitmapGrayscale): BitmapGrayscale;
+    function PaddingBitmap(bitmap: BitmapBinary): BitmapBinary;
     function Convolution(padBitmap: BitmapColor; K: Kernel): BitmapColor;
     function CompassKernel(): FourWays;
     function EdgeDetection(padBitmap: BitmapGrayscale; K: FourWays; ways: Integer): BitmapGrayscale;
+    function Dilation(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
+    function BoolToByte(value: Boolean): Byte;
 
   public
 
@@ -81,12 +86,13 @@ uses
 
 var
   BitmapPattern, BitmapTexture1, BitmapTexture2, BitmapObject: BitmapColor;
-  BitmapBinaryImage: BitmapGrayscale;
+  BitmapBinaryImage: BitmapBinary;
   imageWidth: Integer = 300;
   imageHeight: Integer = 300;
   KSize: Integer = 3;
   LPFKernel: Kernel = ((1/9, 1/9, 1/9), (1/9, 1/9, 1/9), (1/9, 1/9, 1/9));
   HPFKernel: Kernel = ((-1, -1, -1), (-1, 9, -1), (-1, -1, -1));
+  StructElement: SE = ((1, 1, 1), (1, 1, 1), (1, 1, 1));
 
 procedure TFormMain.ButtonPatternClick(Sender: TObject);
 begin
@@ -116,12 +122,10 @@ begin
   end;
 end;
 
+// EXECUTION
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
-var
-  BitmapGray: BitmapGrayscale;
 begin
-  BitmapGray:= Grayscaling(BitmapPattern);
-  ShowImageFromBitmap(EdgeDetection(PaddingBitmap(BitmapGray), CompassKernel(), 4));
+  ShowImageFromBitmap(Dilation(Binarization(EdgeDetection(Grayscaling(BitmapPattern), CompassKernel(), 4), 105), 3));
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -207,6 +211,21 @@ begin
   end;
 end;
 
+procedure TFormMain.ShowImageFromBitmap(bitmap: BitmapBinary);
+var
+  x, y: Integer;
+  pixel: Byte;
+begin
+  for y:= 1 to imageWidth do
+  begin
+    for x:= 1 to imageHeight do
+    begin
+      pixel:= BoolToByte(bitmap[x, y]) * 255;
+      ImageResult.Canvas.Pixels[x-1, y-1]:= RGB(pixel, pixel, pixel);
+    end;
+  end;
+end;
+
 function TFormMain.Grayscaling(bitmap: BitmapColor): BitmapGrayscale;
 var
   x, y: Integer;
@@ -237,19 +256,19 @@ begin
   Invers:= BitmapTemp;
 end;
 
-function TFormMain.Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;
+function TFormMain.Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapBinary;
 var
   x, y: Integer;
-  BitmapTemp: BitmapGrayscale;
+  BitmapTemp: BitmapBinary;
 begin
   for y:= 1 to imageHeight do
   begin
     for x:= 1 to imageWidth do
     begin
       if bitmap[x, y] <= threshold then
-        BitmapTemp[x, y]:= 0
+        BitmapTemp[x, y]:= false
       else
-        BitmapTemp[x, y]:= 255;
+        BitmapTemp[x, y]:= true;
     end;
   end;
   Binarization:= BitmapTemp;
@@ -279,6 +298,26 @@ function TFormMain.PaddingBitmap(bitmap: BitmapGrayscale): BitmapGrayscale;
 var
   x, y: Integer;
   BitmapTemp: BitmapGrayscale;
+begin
+  BitmapTemp:= bitmap;
+  for y:= 1 to imageHeight do
+  begin
+    BitmapTemp[0, y]:= BitmapTemp[1, y];
+    BitmapTemp[imageWidth+1, y]:= BitmapTemp[imageWidth, y];
+  end;
+
+  for x:= 0 to imageWidth+1 do
+  begin
+    BitmapTemp[x, 0]:= BitmapTemp[x, 1];
+    BitmapTemp[x, imageHeight+1]:= BitmapTemp[x, imageHeight];
+  end;
+  PaddingBitmap:= BitmapTemp;
+end;
+
+function TFormMain.PaddingBitmap(bitmap: BitmapBinary): BitmapBinary;
+var
+  x, y: Integer;
+  BitmapTemp: BitmapBinary;
 begin
   BitmapTemp:= bitmap;
   for y:= 1 to imageHeight do
@@ -383,6 +422,41 @@ begin
   K[3]:= cN;
   K[4]:= cE;
   CompassKernel:= K;
+end;
+
+function TFormMain.Dilation(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
+var
+  x, y: Integer;
+  kx, ky: Integer;
+  m: Integer;
+  BitmapTemp: BitmapBinary;
+  BitmapInput: BitmapBinary;
+begin
+  BitmapInput:= padBitmap;
+  for m:= 1 to loop do
+  begin
+    for y:= 1 to imageHeight do
+    begin
+      for x:= 1 to imageWidth do
+      begin
+        BitmapTemp[x, y]:= false;
+        for ky:= -1 to 1 do
+        begin
+          for kx:= -1 to 1 do
+          begin
+            BitmapTemp[x, y]:= BitmapTemp[x, y] OR (BoolToByte(BitmapInput[x-kx, y-ky]) = StructElement[kx, ky]);
+          end;
+        end;
+      end;
+    end;
+    BitmapInput:= BitmapTemp;
+  end;
+  Dilation:= BitmapInput;
+end;
+
+function TFormMain.BoolToByte(value: Boolean): Byte;
+begin
+  if value then BoolToByte:= 1 else BoolToByte:= 0;
 end;
 
 end.

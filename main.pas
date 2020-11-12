@@ -66,6 +66,7 @@ type
     function CompassKernel(): FourWays;
     function EdgeDetection(padBitmap: BitmapGrayscale; K: FourWays; ways: Integer): BitmapGrayscale;
     function Dilation(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
+    function Erosion(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
     function BoolToByte(value: Boolean): Byte;
 
   public
@@ -125,7 +126,7 @@ end;
 // EXECUTION
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
 begin
-  ShowImageFromBitmap(Dilation(Binarization(EdgeDetection(Grayscaling(BitmapPattern), CompassKernel(), 4), 105), 3));
+  ShowImageFromBitmap(Erosion(Dilation(Binarization(EdgeDetection(Grayscaling(BitmapPattern), CompassKernel(), 4), 105), 3), 3));
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -452,6 +453,36 @@ begin
     BitmapInput:= BitmapTemp;
   end;
   Dilation:= BitmapInput;
+end;
+
+function TFormMain.Erosion(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
+var
+  x, y: Integer;
+  kx, ky: Integer;
+  m: Integer;
+  BitmapTemp: BitmapBinary;
+  BitmapInput: BitmapBinary;
+begin
+  BitmapInput:= padBitmap;
+  for m:= 1 to loop do
+  begin
+    for y:= 1 to imageHeight do
+    begin
+      for x:= 1 to imageWidth do
+      begin
+        BitmapTemp[x, y]:= true;
+        for ky:= -1 to 1 do
+        begin
+          for kx:= -1 to 1 do
+          begin
+            BitmapTemp[x, y]:= BitmapTemp[x, y] AND (BoolToByte(BitmapInput[x-kx, y-ky]) = StructElement[kx, ky]);
+          end;
+        end;
+      end;
+    end;
+    BitmapInput:= BitmapTemp;
+  end;
+  Erosion:= BitmapInput;
 end;
 
 function TFormMain.BoolToByte(value: Boolean): Byte;

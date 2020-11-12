@@ -13,7 +13,6 @@ object FormMain: TFormMain
     Height = 135
     Top = 40
     Width = 135
-    AutoSize = True
   end
   object ImageTexture1: TImage
     Left = 416

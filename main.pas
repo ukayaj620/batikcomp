@@ -17,9 +17,11 @@ type
   end;
 
   Kernel = array[-1..1, -1..1] of Real;
+  KernelInt = array[-1..1, -1..1] of Integer;
   SE = array[-1..1, -1..1] of Integer;
   BitmapColor = array[0..1000, 0..1000] of Channel;
   BitmapGrayscale = array[0..1000, 0..1000] of Byte;
+  FourWays = array[1..4] of KernelInt;
 
   { TFormMain }
 
@@ -56,7 +58,10 @@ type
     function Invers(bitmap: BitmapGrayscale): BitmapGrayscale;
     function Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;
     function PaddingBitmap(bitmap: BitmapColor): BitmapColor;
+    function PaddingBitmap(bitmap: BitmapGrayscale): BitmapGrayscale;
     function Convolution(padBitmap: BitmapColor; K: Kernel): BitmapColor;
+    function CompassKernel(): FourWays;
+    function EdgeDetection(padBitmap: BitmapGrayscale; K: FourWays; ways: Integer): BitmapGrayscale;
 
   public
 
@@ -112,8 +117,11 @@ begin
 end;
 
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
+var
+  BitmapGray: BitmapGrayscale;
 begin
-  ShowImageFromBitmap(Invers(Grayscaling(BitmapPattern)));
+  BitmapGray:= Grayscaling(BitmapPattern);
+  ShowImageFromBitmap(EdgeDetection(PaddingBitmap(BitmapGray), CompassKernel(), 4));
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -267,6 +275,26 @@ begin
   PaddingBitmap:= BitmapTemp;
 end;
 
+function TFormMain.PaddingBitmap(bitmap: BitmapGrayscale): BitmapGrayscale;
+var
+  x, y: Integer;
+  BitmapTemp: BitmapGrayscale;
+begin
+  BitmapTemp:= bitmap;
+  for y:= 1 to imageHeight do
+  begin
+    BitmapTemp[0, y]:= BitmapTemp[1, y];
+    BitmapTemp[imageWidth+1, y]:= BitmapTemp[imageWidth, y];
+  end;
+
+  for x:= 0 to imageWidth+1 do
+  begin
+    BitmapTemp[x, 0]:= BitmapTemp[x, 1];
+    BitmapTemp[x, imageHeight+1]:= BitmapTemp[x, imageHeight];
+  end;
+  PaddingBitmap:= BitmapTemp;
+end;
+
 function TFormMain.Convolution(padBitmap: BitmapColor; K: Kernel): BitmapColor;
 var
   x, y: Integer;
@@ -298,11 +326,63 @@ begin
   Convolution:= ResultBitmap;
 end;
 
+function TFormMain.EdgeDetection(padBitmap: BitmapGrayscale; K: FourWays; ways: Integer): BitmapGrayscale;
+var
+  ResultBitmap: BitmapGrayscale;
+  grays: array[1..4] of Integer;
+  way, gray: Integer;
+  x, y, kx, ky: Integer;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      for way:= 1 to ways do
+      begin
+        grays[way]:= 0;
+      end;
+      for ky:= -1 to 1 do
+      begin
+        for kx:= -1 to 1 do
+        begin
+          for way:= 1 to ways do
+          begin
+            grays[way]:= grays[way] + (padBitmap[x-kx, y-ky] * K[way, kx, ky]);
+          end;
+        end;
+      end;
+      gray:= 0;
+      for way:= 1 to ways do
+      begin
+        if grays[way] >= gray then
+           gray:= grays[way];
+      end;
+      ResultBitmap[x, y]:= Constrain(Round(gray));
+    end;
+  end;
+  EdgeDetection:= ResultBitmap;
+end;
+
 function TFormMain.Constrain(value: Integer): byte;
 begin
   if value < 0 then Constrain := 0
   else if value > 255 then Constrain := 255
   else Constrain := value;
+end;
+
+function TFormMain.CompassKernel(): FourWays;
+var
+  cS: KernelInt = ((-1, -1, -1), (1, -2, 1), (1, 1, 1));
+  cW: KernelInt = ((1, 1, -1), (1, -2, -1), (1, 1, -1));
+  cN: KernelInt = ((1, 1, 1), (1, -2, 1), (-1, -1, -1));
+  cE: KernelInt = ((-1, 1, 1), (-1, -2, 1), (-1, 1, 1));
+  K: FourWays;
+begin
+  K[1]:= cS;
+  K[2]:= cW;
+  K[3]:= cN;
+  K[4]:= cE;
+  CompassKernel:= K;
 end;
 
 end.

@@ -30,9 +30,10 @@ type
     ImageTexture1: TImage;
     ImageTexture2: TImage;
     ImageObject: TImage;
-    Image5: TImage;
+    ImageResult: TImage;
     OpenPictureDialog1: TOpenPictureDialog;
     SavePictureDialog1: TSavePictureDialog;
+    procedure ButtonExecuteClick(Sender: TObject);
     procedure ButtonObjectClick(Sender: TObject);
     procedure ButtonPatternClick(Sender: TObject);
     procedure ButtonTexture1Click(Sender: TObject);
@@ -40,7 +41,8 @@ type
     procedure FormCreate(Sender: TObject);
   private
     procedure InitImageDimension(imgWidth: Integer; imgHeight: Integer);
-    procedure InitImageBitmap(image: TImage; bitmap: BitmapColor);
+    function InitImageBitmap(image: TImage): BitmapColor;
+    procedure ShowImageFromBitmap(bitmap: BitmapColor);
 
   public
 
@@ -70,7 +72,7 @@ begin
   begin
     ImagePattern.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 
-    InitImageBitmap(ImagePattern, BitmapPattern);
+    BitmapPattern:= InitImageBitmap(ImagePattern);
   end;
 end;
 
@@ -80,8 +82,13 @@ begin
   begin
     ImageObject.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 
-    InitImageBitmap(ImageObject, BitmapObject);
+    BitmapObject:= InitImageBitmap(ImageObject);
   end;
+end;
+
+procedure TFormMain.ButtonExecuteClick(Sender: TObject);
+begin
+  ShowImageFromBitmap(BitmapPattern);
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -90,7 +97,7 @@ begin
   begin
     ImageTexture1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 
-    InitImageBitmap(ImageTexture1, BitmapTexture1);
+    BitmapTexture1:= InitImageBitmap(ImageTexture1);
   end;
 end;
 
@@ -100,7 +107,7 @@ begin
   begin
     ImageTexture2.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 
-    InitImageBitmap(ImageTexture2, BitmapTexture2);
+    BitmapTexture2:= InitImageBitmap(ImageTexture2);
   end;
 end;
 
@@ -109,9 +116,10 @@ begin
   InitImageDimension(imageWidth, imageHeight);
 end;
 
-procedure TFormMain.InitImageBitmap(image: TImage; bitmap: BitmapColor);
+function TFormMain.InitImageBitmap(image: TImage): BitmapColor;
 var
   x, y: Integer;
+  bitmap: BitmapColor;
 begin
   for y:= 1 to imageWidth do
   begin
@@ -122,6 +130,7 @@ begin
       bitmap[x, y].B:= GetBValue(image.Canvas.Pixels[x-1, y-1]);
     end;
   end;
+  InitImageBitmap:= bitmap
 end;
 
 procedure TFormMain.InitImageDimension(imgWidth: Integer; imgHeight: Integer);
@@ -130,11 +139,26 @@ begin
   ImageTexture1.Width:= imgWidth;
   ImageTexture2.Width:= imgWidth;
   ImageObject.Width:= imgWidth;
+  ImageResult.Width:= imgWidth;
 
   ImagePattern.Height:= imgHeight;
   ImageTexture1.Height:= imgHeight;
   ImageTexture2.Height:= imgHeight;
   ImageObject.Height:= imgHeight;
+  ImageResult.Height:= imgHeight;
+end;
+
+procedure TFormMain.ShowImageFromBitmap(bitmap: BitmapColor);
+var
+  x, y: Integer;
+begin
+  for y:= 1 to imageWidth do
+  begin
+    for x:= 1 to imageHeight do
+    begin
+      ImageResult.Canvas.Pixels[x-1, y-1]:= RGB(bitmap[x, y].R, bitmap[x, y].G, bitmap[x, y].B);
+    end;
+  end;
 end;
 
 end.

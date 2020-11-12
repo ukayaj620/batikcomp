@@ -69,7 +69,7 @@ object FormMain: TFormMain
     OnClick = ButtonObjectClick
     TabOrder = 3
   end
-  object Image5: TImage
+  object ImageResult: TImage
     Left = 808
     Height = 135
     Top = 432
@@ -81,6 +81,7 @@ object FormMain: TFormMain
     Top = 432
     Width = 113
     Caption = 'Execute'
+    OnClick = ButtonExecuteClick
     TabOrder = 4
   end
   object ButtonSave: TButton

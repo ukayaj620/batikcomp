@@ -7,6 +7,7 @@ object FormMain: TFormMain
   ClientHeight = 871
   ClientWidth = 1685
   DesignTimePPI = 144
+  OnCreate = FormCreate
   LCLVersion = '2.0.6.0'
   object ImagePattern: TImage
     Left = 32
@@ -35,7 +36,7 @@ object FormMain: TFormMain
   object ButtonPattern: TButton
     Left = 32
     Height = 38
-    Top = 360
+    Top = 376
     Width = 113
     Caption = 'Load Pattern'
     OnClick = ButtonPatternClick
@@ -44,25 +45,28 @@ object FormMain: TFormMain
   object ButtonTexture1: TButton
     Left = 416
     Height = 38
-    Top = 360
+    Top = 376
     Width = 113
     Caption = 'Load Texture'
+    OnClick = ButtonTexture1Click
     TabOrder = 1
   end
   object ButtonTexture2: TButton
     Left = 808
     Height = 38
-    Top = 360
+    Top = 376
     Width = 113
     Caption = 'Load Texture'
+    OnClick = ButtonTexture2Click
     TabOrder = 2
   end
   object ButtonObject: TButton
     Left = 1208
     Height = 38
-    Top = 360
+    Top = 376
     Width = 113
     Caption = 'Load Object'
+    OnClick = ButtonObjectClick
     TabOrder = 3
   end
   object Image5: TImage

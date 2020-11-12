@@ -58,6 +58,7 @@ type
     function Constrain(value: Integer): Byte;
     function Grayscaling(bitmap: BitmapColor): BitmapGrayscale;
     function Invers(bitmap: BitmapGrayscale): BitmapGrayscale;
+    function Invers(bitmap: BitmapBinary): BitmapBinary;
     function Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapBinary;
     function PaddingBitmap(bitmap: BitmapColor): BitmapColor;
     function PaddingBitmap(bitmap: BitmapGrayscale): BitmapGrayscale;
@@ -68,6 +69,9 @@ type
     function Dilation(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
     function Erosion(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
     function BoolToByte(value: Boolean): Byte;
+    function BinaryToGrayscale(bitmap: BitmapBinary): BitmapGrayscale;
+    function ArithmeticAnd(bitmap1: BitmapBinary; bitmap2: BitmapBinary): BitmapBinary;
+    function ArithmeticAddition(bitmap1: BitmapGrayscale; bitmap2: BitmapGrayscale): BitmapGrayscale;
 
   public
 
@@ -125,8 +129,15 @@ end;
 
 // EXECUTION
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
+var
+  Pattern: BitmapBinary;
+  ObjBinary: BitmapBinary;
+  ObjEdge: BitmapGrayscale;
 begin
-  ShowImageFromBitmap(Erosion(Dilation(Binarization(EdgeDetection(Grayscaling(BitmapPattern), CompassKernel(), 4), 105), 3), 3));
+  Pattern:= Invers(Erosion(Dilation(Binarization(EdgeDetection(Grayscaling(BitmapPattern), CompassKernel(), 4), 105), 3), 2));
+  ObjBinary:= Dilation(Erosion(Binarization(Grayscaling(BitmapObject), 253), 5), 5);
+  ObjEdge:= EdgeDetection(Grayscaling(BitmapObject), CompassKernel(), 4);
+  ShowImageFromBitmap(ArithmeticAddition(BinaryToGrayscale(ArithmeticAnd(Pattern, ObjBinary)), ObjEdge));
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -252,6 +263,21 @@ begin
     for x:= 1 to imageWidth do
     begin
       BitmapTemp[x, y]:= 255 - bitmap[x, y];
+    end;
+  end;
+  Invers:= BitmapTemp;
+end;
+
+function TFormMain.Invers(bitmap: BitmapBinary): BitmapBinary;
+var
+  x, y: Integer;
+  BitmapTemp: BitmapBinary;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      BitmapTemp[x, y]:= NOT bitmap[x, y];
     end;
   end;
   Invers:= BitmapTemp;
@@ -485,9 +511,54 @@ begin
   Erosion:= BitmapInput;
 end;
 
+function TFormMain.ArithmeticAnd(bitmap1: BitmapBinary; bitmap2: BitmapBinary): BitmapBinary;
+var
+  x, y: Integer;
+  ResultBitmap: BitmapBinary;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      ResultBitmap[x, y]:= bitmap1[x, y] AND bitmap2[x, y];
+    end;
+  end;
+  ArithmeticAnd:= ResultBitmap;
+end;
+
+function TFormMain.ArithmeticAddition(bitmap1: BitmapGrayscale; bitmap2: BitmapGrayscale): BitmapGrayscale;
+var
+  x, y: Integer;
+  ResultBitmap: BitmapGrayscale;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      ResultBitmap[x, y]:= bitmap1[x, y] + bitmap2[x, y];
+    end;
+  end;
+  ArithmeticAddition:= ResultBitmap;
+end;
+
 function TFormMain.BoolToByte(value: Boolean): Byte;
 begin
   if value then BoolToByte:= 1 else BoolToByte:= 0;
+end;
+
+function TFormMain.BinaryToGrayscale(bitmap: BitmapBinary): BitmapGrayscale;
+var
+  x, y: Integer;
+  ResultBitmap: BitmapGrayscale;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      ResultBitmap[x, y]:= BoolToByte(bitmap[x, y]) * 255;
+    end;
+  end;
+  BinaryToGrayscale:= ResultBitmap;
 end;
 
 end.

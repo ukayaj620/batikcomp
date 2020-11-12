@@ -55,9 +55,7 @@ type
     function Grayscaling(bitmap: BitmapColor): BitmapGrayscale;
     function Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;
     function PaddingBitmap(bitmap: BitmapColor): BitmapColor;
-    function LPFKernel(): Kernel;
-    function LPF(padBitmap: BitmapColor): BitmapColor;
-
+    function Convolution(padBitmap: BitmapColor; K: Kernel): BitmapColor;
 
   public
 
@@ -81,6 +79,8 @@ var
   imageWidth: Integer = 300;
   imageHeight: Integer = 300;
   KSize: Integer = 3;
+  LPFKernel: Kernel = ((1/9, 1/9, 1/9), (1/9, 1/9, 1/9), (1/9, 1/9, 1/9));
+  HPFKernel: Kernel = ((-1, -1, -1), (-1, 9, -1), (-1, -1, -1));
 
 procedure TFormMain.ButtonPatternClick(Sender: TObject);
 begin
@@ -112,7 +112,7 @@ end;
 
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
 begin
-  ShowImageFromBitmap(LPF(PaddingBitmap(BitmapPattern)));
+  ShowImageFromBitmap(Convolution(PaddingBitmap(BitmapPattern), HPFKernel));
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -251,30 +251,13 @@ begin
   PaddingBitmap:= BitmapTemp;
 end;
 
-function TFormMain.LPFKernel(): Kernel;
-var
-  x, y: Integer;
-  KernelTemp: Kernel;
-begin
-  for y:= -1 to 1 do
-  begin
-    for x:= -1 to 1 do
-    begin
-      KernelTemp[x, y]:= 1 / 9;
-    end;
-  end;
-  LPFKernel:= KernelTemp;
-end;
-
-function TFormMain.LPF(padBitmap: BitmapColor): BitmapColor;
+function TFormMain.Convolution(padBitmap: BitmapColor; K: Kernel): BitmapColor;
 var
   x, y: Integer;
   kx, ky: Integer;
-  K: Kernel;
   ResultBitmap: BitmapColor;
   pixel: ChannelDouble;
 begin
-  K:= LPFKernel();
   for y:= 1 to imageHeight do
   begin
     for x:= 1 to imageWidth do
@@ -296,7 +279,7 @@ begin
       ResultBitmap[x, y].B:= Constrain(Round(pixel.B));
     end;
   end;
-  LPF:= ResultBitmap;
+  Convolution:= ResultBitmap;
 end;
 
 function TFormMain.Constrain(value: Integer): byte;

@@ -53,6 +53,7 @@ type
     procedure ShowImageFromBitmap(bitmap: BitmapGrayscale);
     function Constrain(value: Integer): Byte;
     function Grayscaling(bitmap: BitmapColor): BitmapGrayscale;
+    function Invers(bitmap: BitmapGrayscale): BitmapGrayscale;
     function Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;
     function PaddingBitmap(bitmap: BitmapColor): BitmapColor;
     function Convolution(padBitmap: BitmapColor; K: Kernel): BitmapColor;
@@ -112,7 +113,7 @@ end;
 
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
 begin
-  ShowImageFromBitmap(Convolution(PaddingBitmap(BitmapPattern), HPFKernel));
+  ShowImageFromBitmap(Invers(Grayscaling(BitmapPattern)));
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -211,6 +212,21 @@ begin
     end;
   end;
   Grayscaling:= BitmapTemp;
+end;
+
+function TFormMain.Invers(bitmap: BitmapGrayscale): BitmapGrayscale;
+var
+  x, y: Integer;
+  BitmapTemp: BitmapGrayscale;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      BitmapTemp[x, y]:= 255 - bitmap[x, y];
+    end;
+  end;
+  Invers:= BitmapTemp;
 end;
 
 function TFormMain.Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;

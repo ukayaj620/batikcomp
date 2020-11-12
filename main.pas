@@ -14,7 +14,7 @@ type
   end;
   Kernel = array[1..3, 1..3] of Integer;
   BitmapColor = array[0..1000, 0..1000] of Channel;
-  BitmapBinary = array[0..1000, 0..1000] of Boolean;
+  BitmapGrayscale = array[0..1000, 0..1000] of Byte;
 
   { TFormMain }
 
@@ -36,6 +36,7 @@ type
     procedure ButtonExecuteClick(Sender: TObject);
     procedure ButtonObjectClick(Sender: TObject);
     procedure ButtonPatternClick(Sender: TObject);
+    procedure ButtonSaveClick(Sender: TObject);
     procedure ButtonTexture1Click(Sender: TObject);
     procedure ButtonTexture2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -43,6 +44,9 @@ type
     procedure InitImageDimension(imgWidth: Integer; imgHeight: Integer);
     function InitImageBitmap(image: TImage): BitmapColor;
     procedure ShowImageFromBitmap(bitmap: BitmapColor);
+    procedure ShowImageFromBitmap(bitmap: BitmapGrayscale);
+    function Grayscaling(bitmap: BitmapColor): BitmapGrayscale;
+    function Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;
 
   public
 
@@ -62,7 +66,7 @@ uses
 
 var
   BitmapPattern, BitmapTexture1, BitmapTexture2, BitmapObject: BitmapColor;
-  BitmapBinaryImage: BitmapBinary;
+  BitmapBinaryImage: BitmapGrayscale;
   imageWidth: Integer = 300;
   imageHeight: Integer = 300;
 
@@ -73,6 +77,14 @@ begin
     ImagePattern.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 
     BitmapPattern:= InitImageBitmap(ImagePattern);
+  end;
+end;
+
+procedure TFormMain.ButtonSaveClick(Sender: TObject);
+begin
+  if SavePictureDialog1.Execute then
+  begin
+    ImageResult.Picture.SaveToFile(SavePictureDialog1.FileName);
   end;
 end;
 
@@ -88,7 +100,7 @@ end;
 
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
 begin
-  ShowImageFromBitmap(BitmapPattern);
+  ShowImageFromBitmap(Binarization(Grayscaling(BitmapPattern), 127));
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -159,6 +171,51 @@ begin
       ImageResult.Canvas.Pixels[x-1, y-1]:= RGB(bitmap[x, y].R, bitmap[x, y].G, bitmap[x, y].B);
     end;
   end;
+end;
+
+procedure TFormMain.ShowImageFromBitmap(bitmap: BitmapGrayscale);
+var
+  x, y: Integer;
+begin
+  for y:= 1 to imageWidth do
+  begin
+    for x:= 1 to imageHeight do
+    begin
+      ImageResult.Canvas.Pixels[x-1, y-1]:= RGB(bitmap[x, y], bitmap[x, y], bitmap[x, y]);
+    end;
+  end;
+end;
+
+function TFormMain.Grayscaling(bitmap: BitmapColor): BitmapGrayscale;
+var
+  x, y: Integer;
+  BitmapTemp: BitmapGrayscale;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      BitmapTemp[x, y]:= (bitmap[x, y].R + bitmap[x, y].G + bitmap[x, y].B) div 3
+    end;
+  end;
+  Grayscaling:= BitmapTemp;
+end;
+function TFormMain.Binarization(bitmap: BitmapGrayscale; threshold: Byte): BitmapGrayscale;
+var
+  x, y: Integer;
+  BitmapTemp: BitmapGrayscale;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      if bitmap[x, y] <= threshold then
+        BitmapTemp[x, y]:= 0
+      else
+        BitmapTemp[x, y]:= 255;
+    end;
+  end;
+  Binarization:= BitmapTemp;
 end;
 
 end.

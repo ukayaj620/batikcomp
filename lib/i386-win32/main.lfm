@@ -6,6 +6,7 @@ object FormMain: TFormMain
   Caption = 'Jayaku, Jason, Vincent - Tile and Vas'
   ClientHeight = 871
   ClientWidth = 1685
+  Color = clWhite
   DesignTimePPI = 144
   OnCreate = FormCreate
   LCLVersion = '2.0.10.0'
@@ -61,7 +62,7 @@ object FormMain: TFormMain
     TabOrder = 2
   end
   object ButtonObject: TButton
-    Left = 1208
+    Left = 1230
     Height = 38
     Top = 376
     Width = 113
@@ -76,7 +77,7 @@ object FormMain: TFormMain
     Width = 135
   end
   object ButtonExecute: TButton
-    Left = 1208
+    Left = 1230
     Height = 38
     Top = 432
     Width = 113
@@ -85,7 +86,7 @@ object FormMain: TFormMain
     TabOrder = 4
   end
   object ButtonSave: TButton
-    Left = 1208
+    Left = 1230
     Height = 38
     Top = 496
     Width = 113
@@ -93,11 +94,67 @@ object FormMain: TFormMain
     OnClick = ButtonSaveClick
     TabOrder = 5
   end
-  object Bevel1: TBevel
+  object Panel1: TPanel
     Left = 32
-    Height = 336
-    Top = 432
-    Width = 504
+    Height = 379
+    Top = 448
+    Width = 687
+    BevelColor = clSilver
+    BevelInner = bvSpace
+    BevelOuter = bvSpace
+    ClientHeight = 379
+    ClientWidth = 687
+    Color = clWhite
+    ParentColor = False
+    TabOrder = 6
+    object Label1: TLabel
+      Left = 32
+      Height = 48
+      Top = 32
+      Width = 185
+      Caption = 'Developer:'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -32
+      Font.Name = 'Sitka Small'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 32
+      Height = 40
+      Top = 104
+      Width = 92
+      Caption = 'Label2'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -28
+      Font.Name = 'Sitka Text'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label3: TLabel
+      Left = 32
+      Height = 40
+      Top = 160
+      Width = 91
+      Caption = 'Label3'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -28
+      Font.Name = 'Sitka Text'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
   end
   object SavePictureDialog1: TSavePictureDialog
     Left = 1524

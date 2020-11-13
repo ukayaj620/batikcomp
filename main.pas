@@ -27,7 +27,6 @@ type
   { TFormMain }
 
   TFormMain = class(TForm)
-    Bevel1: TBevel;
     ButtonPattern: TButton;
     ButtonTexture1: TButton;
     ButtonTexture2: TButton;
@@ -39,7 +38,13 @@ type
     ImageTexture2: TImage;
     ImageObject: TImage;
     ImageResult: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
     OpenPictureDialog1: TOpenPictureDialog;
+    Panel1: TPanel;
     SavePictureDialog1: TSavePictureDialog;
     procedure ButtonExecuteClick(Sender: TObject);
     procedure ButtonObjectClick(Sender: TObject);

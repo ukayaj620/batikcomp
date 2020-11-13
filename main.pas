@@ -97,7 +97,6 @@ uses
 
 var
   BitmapPattern, BitmapTexture1, BitmapTexture2, BitmapObject: BitmapColor;
-  BitmapBinaryImage: BitmapBinary;
   imageWidth: Integer = 300;
   imageHeight: Integer = 300;
   LPFKernel: Kernel = ((1/9, 1/9, 1/9), (1/9, 1/9, 1/9), (1/9, 1/9, 1/9));

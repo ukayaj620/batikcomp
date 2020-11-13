@@ -97,25 +97,25 @@ object FormMain: TFormMain
   object Panel1: TPanel
     Left = 32
     Height = 379
-    Top = 448
-    Width = 687
+    Top = 432
+    Width = 656
     BevelColor = clSilver
     BevelInner = bvSpace
     BevelOuter = bvSpace
     ClientHeight = 379
-    ClientWidth = 687
+    ClientWidth = 656
     Color = clWhite
     ParentColor = False
     TabOrder = 6
     object Label1: TLabel
-      Left = 32
-      Height = 48
-      Top = 32
-      Width = 185
+      Left = 31
+      Height = 65
+      Top = 24
+      Width = 255
       Caption = 'Developer:'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlack
-      Font.Height = -32
+      Font.Height = -44
       Font.Name = 'Sitka Small'
       Font.Pitch = fpVariable
       Font.Quality = fqDraft
@@ -127,8 +127,8 @@ object FormMain: TFormMain
       Left = 32
       Height = 40
       Top = 104
-      Width = 92
-      Caption = 'Label2'
+      Width = 426
+      Caption = '- Jayaku Briliantio (32180088)'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -28
@@ -143,8 +143,40 @@ object FormMain: TFormMain
       Left = 32
       Height = 40
       Top = 160
-      Width = 91
-      Caption = 'Label3'
+      Width = 411
+      Caption = '- Jason Alexander (32180082)'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -28
+      Font.Name = 'Sitka Text'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 31
+      Height = 40
+      Top = 216
+      Width = 368
+      Caption = '- Kevin Hosea (321800114)'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -28
+      Font.Name = 'Sitka Text'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label5: TLabel
+      Left = 72
+      Height = 40
+      Top = 312
+      Width = 490
+      Caption = 'Build with LOVE using Lazarus IDE'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -28

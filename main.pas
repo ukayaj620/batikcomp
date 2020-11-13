@@ -72,6 +72,7 @@ type
     function BinaryToGrayscale(bitmap: BitmapBinary): BitmapGrayscale;
     function ArithmeticAnd(bitmap1: BitmapBinary; bitmap2: BitmapBinary): BitmapBinary;
     function ArithmeticAddition(bitmap1: BitmapGrayscale; bitmap2: BitmapGrayscale): BitmapGrayscale;
+    function ArithmeticMultiply(bitmap1: BitmapGrayscale; bitmap2: BitmapColor): BitmapColor;
 
   public
 
@@ -130,14 +131,30 @@ end;
 // EXECUTION
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
 var
-  Pattern: BitmapBinary;
-  ObjBinary: BitmapBinary;
-  ObjEdge: BitmapGrayscale;
+  PatternResult, PatternBinary, PatternErosion, PatternDilation, PatternInvers: BitmapBinary;
+  PatternGrayscale, PatternEdge, PatternPadding: BitmapGrayscale;
 begin
-  Pattern:= Invers(Erosion(Dilation(Binarization(EdgeDetection(Grayscaling(BitmapPattern), CompassKernel(), 4), 105), 3), 2));
-  ObjBinary:= Dilation(Erosion(Binarization(Grayscaling(BitmapObject), 253), 5), 5);
-  ObjEdge:= EdgeDetection(Grayscaling(BitmapObject), CompassKernel(), 4);
-  ShowImageFromBitmap(ArithmeticAddition(BinaryToGrayscale(ArithmeticAnd(Pattern, ObjBinary)), ObjEdge));
+  // Pattern:= Invers(Erosion(Dilation(Binarization(EdgeDetection(Grayscaling(BitmapPattern), CompassKernel(), 4), 105), 3), 2));
+  // ObjBinary:= Dilation(Erosion(Binarization(Grayscaling(BitmapObject), 253), 5), 5);
+  // ObjEdge:= EdgeDetection(Grayscaling(BitmapObject), CompassKernel(), 4);
+
+  // Process Pattern Image (First Image from Left)
+  PatternGrayscale:= Grayscaling(BitmapPattern);
+  PatternPadding:= PaddingBitmap(PatternGrayscale);
+  PatternEdge:= EdgeDetection(PatternPadding, CompassKernel(), 4);
+  PatternBinary:= Binarization(PatternEdge, 105);
+  PatternDilation:= Dilation(PatternBinary, 3);
+  PatternErosion:= Erosion(PatternDilation, 2);
+  PatternInvers:= Invers(PatternErosion);
+  PatternResult:= PatternInvers;
+
+  // Process Texture Image 1 (Second Image from Left)
+  // Process Texture Image 3 (Third Image from Left)
+
+  // Process Object Image (Last Image)
+
+
+  ShowImageFromBitmap(PatternResult);
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -309,8 +326,8 @@ begin
   BitmapTemp:= bitmap;
   for y:= 1 to imageHeight do
   begin
-    BitmapTemp[0, y]:= BitmapTemp[1, y];
-    BitmapTemp[imageWidth+1, y]:= BitmapTemp[imageWidth, y];
+    BitmapTemp[0, y]:= bitmap[1, y];
+    BitmapTemp[imageWidth+1, y]:= bitmap[imageWidth, y];
   end;
 
   for x:= 0 to imageWidth+1 do
@@ -329,8 +346,8 @@ begin
   BitmapTemp:= bitmap;
   for y:= 1 to imageHeight do
   begin
-    BitmapTemp[0, y]:= BitmapTemp[1, y];
-    BitmapTemp[imageWidth+1, y]:= BitmapTemp[imageWidth, y];
+    BitmapTemp[0, y]:= bitmap[1, y];
+    BitmapTemp[imageWidth+1, y]:= bitmap[imageWidth, y];
   end;
 
   for x:= 0 to imageWidth+1 do
@@ -349,8 +366,8 @@ begin
   BitmapTemp:= bitmap;
   for y:= 1 to imageHeight do
   begin
-    BitmapTemp[0, y]:= BitmapTemp[1, y];
-    BitmapTemp[imageWidth+1, y]:= BitmapTemp[imageWidth, y];
+    BitmapTemp[0, y]:= bitmap[1, y];
+    BitmapTemp[imageWidth+1, y]:= bitmap[imageWidth, y];
   end;
 
   for x:= 0 to imageWidth+1 do
@@ -459,7 +476,7 @@ var
   BitmapTemp: BitmapBinary;
   BitmapInput: BitmapBinary;
 begin
-  BitmapInput:= padBitmap;
+  BitmapInput:= PaddingBitmap(padBitmap);
   for m:= 1 to loop do
   begin
     for y:= 1 to imageHeight do
@@ -476,7 +493,7 @@ begin
         end;
       end;
     end;
-    BitmapInput:= BitmapTemp;
+    BitmapInput:= PaddingBitmap(BitmapTemp);
   end;
   Dilation:= BitmapInput;
 end;
@@ -559,6 +576,23 @@ begin
     end;
   end;
   BinaryToGrayscale:= ResultBitmap;
+end;
+
+function TFormMain.ArithmeticMultiply(bitmap1: BitmapGrayscale; bitmap2: BitmapColor): BitmapColor;
+var
+  x, y: Integer;
+  ResultBitmap: BitmapColor;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      ResultBitmap[x, y].R:= Constrain(Round((bitmap1[x, y] / 255) * (bitmap2[x, y].R / 255) * 255));
+      ResultBitmap[x, y].G:= Constrain(Round((bitmap1[x, y] / 255) * (bitmap2[x, y].G / 255) * 255));
+      ResultBitmap[x, y].B:= Constrain(Round((bitmap1[x, y] / 255) * (bitmap2[x, y].B / 255) * 255));
+    end;
+  end;
+  ArithmeticMultiply:= ResultBitmap;
 end;
 
 end.

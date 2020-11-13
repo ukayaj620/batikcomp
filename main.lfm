@@ -3,7 +3,7 @@ object FormMain: TFormMain
   Height = 871
   Top = 31
   Width = 1685
-  Caption = 'Jayaku, Jason, Vincent - Tile and Vas'
+  Caption = 'JAYAKU | JASON | KEVIN | BATIKCOMP'
   ClientHeight = 871
   ClientWidth = 1685
   Color = clWhite

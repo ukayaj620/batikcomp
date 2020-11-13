@@ -19,9 +19,9 @@ type
   Kernel = array[-1..1, -1..1] of Real;
   KernelInt = array[-1..1, -1..1] of Integer;
   SE = array[-1..1, -1..1] of Byte;
-  BitmapColor = array[0..1000, 0..1000] of Channel;
-  BitmapGrayscale = array[0..1000, 0..1000] of Byte;
-  BitmapBinary = array[0..1000, 0..1000] of Boolean;
+  BitmapColor = array[0..301, 0..301] of Channel;
+  BitmapGrayscale = array[0..301, 0..301] of Byte;
+  BitmapBinary = array[0..301, 0..301] of Boolean;
   FourWays = array[1..4] of KernelInt;
 
   { TFormMain }
@@ -34,7 +34,6 @@ type
     ButtonObject: TButton;
     ButtonExecute: TButton;
     ButtonSave: TButton;
-    Edit1: TEdit;
     ImagePattern: TImage;
     ImageTexture1: TImage;
     ImageTexture2: TImage;
@@ -72,6 +71,7 @@ type
     function BinaryToGrayscale(bitmap: BitmapBinary): BitmapGrayscale;
     function ArithmeticAnd(bitmap1: BitmapBinary; bitmap2: BitmapBinary): BitmapBinary;
     function ArithmeticAddition(bitmap1: BitmapGrayscale; bitmap2: BitmapGrayscale): BitmapGrayscale;
+    function ArithmeticAddition(bitmap1: BitmapColor; bitmap2: BitmapColor): BitmapColor;
     function ArithmeticMultiply(bitmap1: BitmapGrayscale; bitmap2: BitmapColor): BitmapColor;
 
   public
@@ -95,7 +95,6 @@ var
   BitmapBinaryImage: BitmapBinary;
   imageWidth: Integer = 300;
   imageHeight: Integer = 300;
-  KSize: Integer = 3;
   LPFKernel: Kernel = ((1/9, 1/9, 1/9), (1/9, 1/9, 1/9), (1/9, 1/9, 1/9));
   HPFKernel: Kernel = ((-1, -1, -1), (-1, 9, -1), (-1, -1, -1));
   StructElement: SE = ((1, 1, 1), (1, 1, 1), (1, 1, 1));
@@ -131,30 +130,36 @@ end;
 // EXECUTION
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
 var
-  PatternResult, PatternBinary, PatternErosion, PatternDilation, PatternInvers: BitmapBinary;
-  PatternGrayscale, PatternEdge, PatternPadding: BitmapGrayscale;
-begin
-  // Pattern:= Invers(Erosion(Dilation(Binarization(EdgeDetection(Grayscaling(BitmapPattern), CompassKernel(), 4), 105), 3), 2));
-  // ObjBinary:= Dilation(Erosion(Binarization(Grayscaling(BitmapObject), 253), 5), 5);
-  // ObjEdge:= EdgeDetection(Grayscaling(BitmapObject), CompassKernel(), 4);
+  PatternInvers, ObjectMask: BitmapBinary;
+  ObjectEdge: BitmapGrayscale;
 
+  PatternObjMaskBinary: BitmapBinary;
+  PatternObjMaskGrayscale: BitmapGrayscale;
+
+  MultiplyTexture1, MultiplyTexture2, Texture1, Texture2, BitmapResult: BitmapColor;
+begin
   // Process Pattern Image (First Image from Left)
-  PatternGrayscale:= Grayscaling(BitmapPattern);
-  PatternPadding:= PaddingBitmap(PatternGrayscale);
-  PatternEdge:= EdgeDetection(PatternPadding, CompassKernel(), 4);
-  PatternBinary:= Binarization(PatternEdge, 105);
-  PatternDilation:= Dilation(PatternBinary, 3);
-  PatternErosion:= Erosion(PatternDilation, 2);
-  PatternInvers:= Invers(PatternErosion);
-  PatternResult:= PatternInvers;
+  PatternInvers:= Invers(Erosion(Dilation(Binarization(EdgeDetection(PaddingBitmap(Grayscaling(BitmapPattern)), CompassKernel(), 4), 105), 3), 2));
 
   // Process Texture Image 1 (Second Image from Left)
-  // Process Texture Image 3 (Third Image from Left)
+  Texture1:= Convolution(PaddingBitmap(Convolution(PaddingBitmap(BitmapTexture1), LPFKernel)), HPFKernel);
+  // Process Texture Image 2 (Third Image from Left)
+  Texture2:= BitmapTexture2;
 
   // Process Object Image (Last Image)
+  ObjectMask:= Dilation(Erosion(Binarization(Grayscaling(BitmapObject), 253), 5), 5);
+  ObjectEdge:= EdgeDetection(Grayscaling(BitmapObject), CompassKernel(), 4);
 
+  PatternObjMaskBinary:= ArithmeticAnd(PatternInvers, ObjectMask);
+  PatternObjMaskGrayscale:= BinaryToGrayscale(PatternObjMaskBinary);
+  PatternObjMaskGrayscale:= ArithmeticAddition(PatternObjMaskGrayscale, ObjectEdge);
 
-  ShowImageFromBitmap(PatternResult);
+  MultiplyTexture1:= ArithmeticMultiply(PatternObjMaskGrayscale, Texture1);
+  MultiplyTexture2:= ArithmeticMultiply(Invers(PatternObjMaskGrayscale), Texture2);
+
+  BitmapResult:= ArithmeticAddition(MultiplyTexture1, MultiplyTexture2);
+
+  ShowImageFromBitmap(BitmapResult);
 end;
 
 procedure TFormMain.ButtonTexture1Click(Sender: TObject);
@@ -553,6 +558,23 @@ begin
     for x:= 1 to imageWidth do
     begin
       ResultBitmap[x, y]:= bitmap1[x, y] + bitmap2[x, y];
+    end;
+  end;
+  ArithmeticAddition:= ResultBitmap;
+end;
+
+function TFormMain.ArithmeticAddition(bitmap1: BitmapColor; bitmap2: BitmapColor): BitmapColor;
+var
+  x, y: Integer;
+  ResultBitmap: BitmapColor;
+begin
+  for y:= 1 to imageHeight do
+  begin
+    for x:= 1 to imageWidth do
+    begin
+      ResultBitmap[x, y].R:= bitmap1[x, y].R + bitmap2[x, y].R;
+      ResultBitmap[x, y].G:= bitmap1[x, y].G + bitmap2[x, y].G;
+      ResultBitmap[x, y].B:= bitmap1[x, y].B + bitmap2[x, y].B;
     end;
   end;
   ArithmeticAddition:= ResultBitmap;

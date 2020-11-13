@@ -8,7 +8,7 @@ object FormMain: TFormMain
   ClientWidth = 1685
   DesignTimePPI = 144
   OnCreate = FormCreate
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.10.0'
   object ImagePattern: TImage
     Left = 32
     Height = 135
@@ -99,20 +99,12 @@ object FormMain: TFormMain
     Top = 432
     Width = 504
   end
-  object Edit1: TEdit
-    Left = 1208
-    Height = 33
-    Top = 656
-    Width = 120
-    TabOrder = 6
-    Text = 'Edit1'
-  end
   object SavePictureDialog1: TSavePictureDialog
-    left = 1524
-    top = 120
+    Left = 1524
+    Top = 120
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    left = 1528
-    top = 200
+    Left = 1528
+    Top = 200
   end
 end

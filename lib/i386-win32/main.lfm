@@ -3,14 +3,14 @@ object FormMain: TFormMain
   Height = 871
   Top = 31
   Width = 1685
-  Caption = 'Jayaku, Jason, Vincent - Tile and Vas'
+  Caption = 'JAYAKU | JASON | KEVIN | BATIKCOMP'
   ClientHeight = 871
   ClientWidth = 1685
   Color = clWhite
   DesignTimePPI = 144
   OnCreate = FormCreate
   LCLVersion = '2.0.10.0'
-  object ImagePattern: TImage
+  object ImagePattern1: TImage
     Left = 32
     Height = 135
     Top = 40
@@ -28,19 +28,19 @@ object FormMain: TFormMain
     Top = 40
     Width = 135
   end
-  object ImageObject: TImage
+  object ImagePattern2: TImage
     Left = 1208
     Height = 135
     Top = 40
     Width = 135
   end
-  object ButtonPattern: TButton
+  object ButtonPattern1: TButton
     Left = 32
     Height = 38
     Top = 376
     Width = 113
     Caption = 'Load Pattern'
-    OnClick = ButtonPatternClick
+    OnClick = ButtonPattern1Click
     TabOrder = 0
   end
   object ButtonTexture1: TButton
@@ -61,13 +61,13 @@ object FormMain: TFormMain
     OnClick = ButtonTexture2Click
     TabOrder = 2
   end
-  object ButtonObject: TButton
-    Left = 1230
+  object ButtonPattern2: TButton
+    Left = 1208
     Height = 38
     Top = 376
     Width = 113
-    Caption = 'Load Object'
-    OnClick = ButtonObjectClick
+    Caption = 'Load Pattern'
+    OnClick = ButtonPattern2Click
     TabOrder = 3
   end
   object ImageResult: TImage
@@ -77,7 +77,7 @@ object FormMain: TFormMain
     Width = 135
   end
   object ButtonExecute: TButton
-    Left = 1230
+    Left = 1208
     Height = 38
     Top = 432
     Width = 113
@@ -86,7 +86,7 @@ object FormMain: TFormMain
     TabOrder = 4
   end
   object ButtonSave: TButton
-    Left = 1230
+    Left = 1208
     Height = 38
     Top = 496
     Width = 113

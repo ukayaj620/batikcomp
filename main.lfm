@@ -1,121 +1,128 @@
 object FormMain: TFormMain
-  Left = 120
-  Height = 871
-  Top = 31
-  Width = 1685
+  Left = 478
+  Height = 726
+  Top = 155
+  Width = 1404
   Caption = 'JAYAKU | JASON | KEVIN | BATIKCOMP'
-  ClientHeight = 871
-  ClientWidth = 1685
+  ClientHeight = 726
+  ClientWidth = 1404
   Color = clWhite
-  DesignTimePPI = 144
+  DesignTimePPI = 120
   OnCreate = FormCreate
   LCLVersion = '2.0.10.0'
   object ImagePattern1: TImage
-    Left = 32
-    Height = 135
-    Top = 40
-    Width = 135
+    Left = 27
+    Height = 112
+    Top = 33
+    Width = 112
   end
   object ImageTexture1: TImage
-    Left = 416
-    Height = 135
-    Top = 40
-    Width = 135
+    Left = 347
+    Height = 112
+    Top = 33
+    Width = 112
   end
   object ImageTexture2: TImage
-    Left = 808
-    Height = 135
-    Top = 40
-    Width = 135
+    Left = 673
+    Height = 112
+    Top = 33
+    Width = 112
   end
   object ImagePattern2: TImage
-    Left = 1208
-    Height = 135
-    Top = 40
-    Width = 135
+    Left = 1007
+    Height = 112
+    Top = 33
+    Width = 112
   end
   object ButtonPattern1: TButton
-    Left = 32
-    Height = 38
-    Top = 376
-    Width = 113
+    Left = 27
+    Height = 32
+    Top = 313
+    Width = 94
     Caption = 'Load Pattern'
     OnClick = ButtonPattern1Click
+    ParentFont = False
     TabOrder = 0
   end
   object ButtonTexture1: TButton
-    Left = 416
-    Height = 38
-    Top = 376
-    Width = 113
+    Left = 347
+    Height = 32
+    Top = 313
+    Width = 94
     Caption = 'Load Texture'
     OnClick = ButtonTexture1Click
+    ParentFont = False
     TabOrder = 1
   end
   object ButtonTexture2: TButton
-    Left = 808
-    Height = 38
-    Top = 376
-    Width = 113
+    Left = 673
+    Height = 32
+    Top = 313
+    Width = 94
     Caption = 'Load Texture'
     OnClick = ButtonTexture2Click
+    ParentFont = False
     TabOrder = 2
   end
   object ButtonPattern2: TButton
-    Left = 1208
-    Height = 38
-    Top = 376
-    Width = 113
+    Left = 1007
+    Height = 32
+    Top = 313
+    Width = 94
     Caption = 'Load Pattern'
     OnClick = ButtonPattern2Click
+    ParentFont = False
     TabOrder = 3
   end
   object ImageResult: TImage
-    Left = 808
-    Height = 135
-    Top = 432
-    Width = 135
+    Left = 673
+    Height = 112
+    Top = 360
+    Width = 112
   end
   object ButtonExecute: TButton
-    Left = 1208
-    Height = 38
-    Top = 432
-    Width = 113
+    Left = 1007
+    Height = 32
+    Top = 360
+    Width = 94
     Caption = 'Execute'
     OnClick = ButtonExecuteClick
+    ParentFont = False
     TabOrder = 4
   end
   object ButtonSave: TButton
-    Left = 1208
-    Height = 38
-    Top = 496
-    Width = 113
+    Left = 1007
+    Height = 32
+    Top = 413
+    Width = 94
     Caption = 'Save'
     OnClick = ButtonSaveClick
+    ParentFont = False
     TabOrder = 5
   end
   object Panel1: TPanel
-    Left = 32
-    Height = 379
-    Top = 432
-    Width = 656
+    Left = 27
+    Height = 276
+    Top = 416
+    Width = 547
     BevelColor = clSilver
     BevelInner = bvSpace
     BevelOuter = bvSpace
-    ClientHeight = 379
-    ClientWidth = 656
+    ClientHeight = 276
+    ClientWidth = 547
     Color = clWhite
     ParentColor = False
+    ParentFont = False
     TabOrder = 6
     object Label1: TLabel
-      Left = 31
-      Height = 65
-      Top = 24
-      Width = 255
+      Left = 26
+      Height = 54
+      Top = 20
+      Width = 216
       Caption = 'Developer:'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlack
-      Font.Height = -44
+      Font.Height = -37
       Font.Name = 'Sitka Small'
       Font.Pitch = fpVariable
       Font.Quality = fqDraft
@@ -124,14 +131,14 @@ object FormMain: TFormMain
       ParentFont = False
     end
     object Label2: TLabel
-      Left = 32
-      Height = 40
-      Top = 104
-      Width = 426
+      Left = 27
+      Height = 33
+      Top = 87
+      Width = 351
       Caption = '- Jayaku Briliantio (32180088)'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlack
-      Font.Height = -28
+      Font.Height = -23
       Font.Name = 'Sitka Text'
       Font.Pitch = fpVariable
       Font.Quality = fqDraft
@@ -140,14 +147,14 @@ object FormMain: TFormMain
       ParentFont = False
     end
     object Label3: TLabel
-      Left = 32
-      Height = 40
-      Top = 160
-      Width = 411
+      Left = 27
+      Height = 33
+      Top = 133
+      Width = 340
       Caption = '- Jason Alexander (32180082)'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlack
-      Font.Height = -28
+      Font.Height = -23
       Font.Name = 'Sitka Text'
       Font.Pitch = fpVariable
       Font.Quality = fqDraft
@@ -156,14 +163,14 @@ object FormMain: TFormMain
       ParentFont = False
     end
     object Label4: TLabel
-      Left = 31
-      Height = 40
-      Top = 216
-      Width = 368
+      Left = 26
+      Height = 33
+      Top = 180
+      Width = 306
       Caption = '- Kevin Hosea (321800114)'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlack
-      Font.Height = -28
+      Font.Height = -23
       Font.Name = 'Sitka Text'
       Font.Pitch = fpVariable
       Font.Quality = fqDraft
@@ -172,14 +179,14 @@ object FormMain: TFormMain
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 72
-      Height = 40
-      Top = 312
-      Width = 490
-      Caption = 'Build with LOVE using Lazarus IDE'
+      Left = 26
+      Height = 33
+      Top = 224
+      Width = 399
+      Caption = 'Built with LOVE using Lazarus IDE'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlack
-      Font.Height = -28
+      Font.Height = -23
       Font.Name = 'Sitka Text'
       Font.Pitch = fpVariable
       Font.Quality = fqDraft
@@ -189,11 +196,11 @@ object FormMain: TFormMain
     end
   end
   object SavePictureDialog1: TSavePictureDialog
-    Left = 1524
-    Top = 120
+    Left = 1270
+    Top = 48
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 1528
-    Top = 200
+    Left = 1273
+    Top = 115
   end
 end

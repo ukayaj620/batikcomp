@@ -142,7 +142,7 @@ var
   Pattern1AndPattern2MultiplyTexture2: BitmapColor;
   SubFinal, Final: BitmapColor;
 begin
-  Pattern1Compass:= EdgeDetection(PaddingBitmap(BinaryToGrayscale(Erosion(Dilation(Invers(Binarization(Grayscaling(BitmapPattern1), 148)), 2), 2))), CompassKernel(), 4);
+  Pattern1Compass:= EdgeDetection(PaddingBitmap(BinaryToGrayscale(Erosion(Dilation(Invers(Binarization(Grayscaling(BitmapPattern1),148)),2),2))),CompassKernel(),4);
 
   Pattern2Binary:= Binarization(Grayscaling(BitmapPattern2), 229);
 

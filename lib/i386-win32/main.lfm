@@ -1,111 +1,118 @@
 object FormMain: TFormMain
-  Left = 120
+  Left = 210
   Height = 871
-  Top = 31
-  Width = 1685
+  Top = 82
+  Width = 1619
   Caption = 'JAYAKU | JASON | KEVIN | BATIKCOMP'
   ClientHeight = 871
-  ClientWidth = 1685
+  ClientWidth = 1619
   Color = clWhite
   DesignTimePPI = 144
   OnCreate = FormCreate
   LCLVersion = '2.0.10.0'
   object ImagePattern1: TImage
     Left = 32
-    Height = 135
-    Top = 40
-    Width = 135
+    Height = 134
+    Top = 56
+    Width = 134
   end
   object ImageTexture1: TImage
     Left = 416
-    Height = 135
-    Top = 40
-    Width = 135
+    Height = 134
+    Top = 56
+    Width = 134
   end
   object ImageTexture2: TImage
     Left = 808
-    Height = 135
-    Top = 40
-    Width = 135
+    Height = 134
+    Top = 56
+    Width = 134
   end
   object ImagePattern2: TImage
     Left = 1208
-    Height = 135
-    Top = 40
-    Width = 135
+    Height = 134
+    Top = 56
+    Width = 134
   end
   object ButtonPattern1: TButton
     Left = 32
     Height = 38
-    Top = 376
+    Top = 392
     Width = 113
     Caption = 'Load Pattern'
     OnClick = ButtonPattern1Click
+    ParentFont = False
     TabOrder = 0
   end
   object ButtonTexture1: TButton
     Left = 416
     Height = 38
-    Top = 376
+    Top = 392
     Width = 113
     Caption = 'Load Texture'
     OnClick = ButtonTexture1Click
+    ParentFont = False
     TabOrder = 1
   end
   object ButtonTexture2: TButton
     Left = 808
     Height = 38
-    Top = 376
+    Top = 392
     Width = 113
     Caption = 'Load Texture'
     OnClick = ButtonTexture2Click
+    ParentFont = False
     TabOrder = 2
   end
   object ButtonPattern2: TButton
     Left = 1208
     Height = 38
-    Top = 376
+    Top = 392
     Width = 113
     Caption = 'Load Pattern'
     OnClick = ButtonPattern2Click
+    ParentFont = False
     TabOrder = 3
   end
   object ImageResult: TImage
     Left = 808
-    Height = 135
-    Top = 432
-    Width = 135
+    Height = 134
+    Top = 448
+    Width = 134
   end
   object ButtonExecute: TButton
     Left = 1208
     Height = 38
-    Top = 432
+    Top = 448
     Width = 113
     Caption = 'Execute'
     OnClick = ButtonExecuteClick
+    ParentFont = False
     TabOrder = 4
   end
   object ButtonSave: TButton
     Left = 1208
     Height = 38
-    Top = 496
+    Top = 512
     Width = 113
     Caption = 'Save'
     OnClick = ButtonSaveClick
+    ParentFont = False
     TabOrder = 5
   end
   object Panel1: TPanel
     Left = 32
-    Height = 379
-    Top = 432
+    Height = 331
+    Top = 499
     Width = 656
     BevelColor = clSilver
     BevelInner = bvSpace
     BevelOuter = bvSpace
-    ClientHeight = 379
+    ClientHeight = 331
     ClientWidth = 656
     Color = clWhite
     ParentColor = False
+    ParentFont = False
     TabOrder = 6
     object Label1: TLabel
       Left = 31
@@ -172,11 +179,11 @@ object FormMain: TFormMain
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 72
+      Left = 31
       Height = 40
-      Top = 312
-      Width = 490
-      Caption = 'Build with LOVE using Lazarus IDE'
+      Top = 269
+      Width = 485
+      Caption = 'Built with LOVE using Lazarus IDE'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -28
@@ -190,10 +197,10 @@ object FormMain: TFormMain
   end
   object SavePictureDialog1: TSavePictureDialog
     Left = 1524
-    Top = 120
+    Top = 58
   end
   object OpenPictureDialog1: TOpenPictureDialog
     Left = 1528
-    Top = 200
+    Top = 138
   end
 end

@@ -195,6 +195,14 @@ object FormMain: TFormMain
       ParentFont = False
     end
   end
+  object EditBinarization: TEdit
+    Left = 168
+    Height = 33
+    Top = 392
+    Width = 120
+    TabOrder = 7
+    Text = '0'
+  end
   object SavePictureDialog1: TSavePictureDialog
     Left = 1524
     Top = 58

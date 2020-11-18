@@ -33,6 +33,7 @@ type
     ButtonPattern2: TButton;
     ButtonExecute: TButton;
     ButtonSave: TButton;
+    EditBinarization: TEdit;
     ImagePattern1: TImage;
     ImageTexture1: TImage;
     ImageTexture2: TImage;
@@ -142,8 +143,8 @@ var
   Pattern1AndPattern2MultiplyTexture2: BitmapColor;
   SubFinal, Final: BitmapColor;
 begin
-  Pattern1Compass:= EdgeDetection(PaddingBitmap(BinaryToGrayscale(Erosion(Dilation(Invers(Binarization(Grayscaling(BitmapPattern1),148)),2),2))),CompassKernel(),4);
-
+  // Pattern1Compass:= EdgeDetection(PaddingBitmap(BinaryToGrayscale(Erosion(Dilation(Invers(Binarization(Grayscaling(BitmapPattern1),148)),2),2))),CompassKernel(),4);
+  Pattern1Compass:= BinaryToGrayscale(Binarization(EdgeDetection(PaddingBitmap(Grayscaling(BitmapPattern1)), CompassKernel(), 4), StrToInt(EditBinarization.Text)));
   Pattern2Binary:= Binarization(Grayscaling(BitmapPattern2), 229);
 
   Pattern1AndPattern2:= ArithmeticAnd(Binarization(Pattern1Compass, 127), Pattern2Binary);

@@ -10,13 +10,13 @@ object FormMain: TFormMain
   DesignTimePPI = 120
   OnCreate = FormCreate
   LCLVersion = '2.0.10.0'
-  object PageControl1: TPageControl
+  object PageControl: TPageControl
     Left = 0
     Height = 726
     Top = 0
     Width = 1402
-    ActivePage = TabSheet3
-    TabIndex = 2
+    ActivePage = TabSheet1
+    TabIndex = 0
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Main'

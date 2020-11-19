@@ -46,7 +46,7 @@ type
     Label4: TLabel;
     Label5: TLabel;
     OpenPictureDialog1: TOpenPictureDialog;
-    PageControl1: TPageControl;
+    PageControl: TPageControl;
     Panel1: TPanel;
     SavePictureDialog1: TSavePictureDialog;
     TabSheet1: TTabSheet;
@@ -190,6 +190,7 @@ end;
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
   InitImageDimension(imageWidth, imageHeight);
+  PageControl.ActivePageIndex:= 0;
 end;
 
 function TFormMain.InitImageBitmap(image: TImage): BitmapColor;

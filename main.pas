@@ -29,11 +29,12 @@ type
   TFormMain = class(TForm)
     ButtonPattern1: TButton;
     ButtonTexture1: TButton;
-    ButtonTexture2: TButton;
+    ButtonBackground: TButton;
     ButtonPattern2: TButton;
     ButtonExecute: TButton;
     ButtonSave: TButton;
     EditBinarization: TEdit;
+    Image1: TImage;
     ImagePattern1: TImage;
     ImageTexture1: TImage;
     ImageTexture2: TImage;
@@ -45,14 +46,18 @@ type
     Label4: TLabel;
     Label5: TLabel;
     OpenPictureDialog1: TOpenPictureDialog;
+    PageControl: TPageControl;
     Panel1: TPanel;
     SavePictureDialog1: TSavePictureDialog;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
     procedure ButtonExecuteClick(Sender: TObject);
     procedure ButtonPattern2Click(Sender: TObject);
     procedure ButtonPattern1Click(Sender: TObject);
     procedure ButtonSaveClick(Sender: TObject);
     procedure ButtonTexture1Click(Sender: TObject);
-    procedure ButtonTexture2Click(Sender: TObject);
+    procedure ButtonBackgroundClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     procedure InitImageDimension(imgWidth: Integer; imgHeight: Integer);
@@ -172,7 +177,7 @@ begin
   end;
 end;
 
-procedure TFormMain.ButtonTexture2Click(Sender: TObject);
+procedure TFormMain.ButtonBackgroundClick(Sender: TObject);
 begin
   if OpenPictureDialog1.Execute then
   begin
@@ -185,6 +190,7 @@ end;
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
   InitImageDimension(imageWidth, imageHeight);
+  PageControl.ActivePageIndex:= 0;
 end;
 
 function TFormMain.InitImageBitmap(image: TImage): BitmapColor;

@@ -15,8 +15,8 @@ object FormMain: TFormMain
     Height = 726
     Top = 0
     Width = 1402
-    ActivePage = TabSheet1
-    TabIndex = 0
+    ActivePage = TabSheet3
+    TabIndex = 2
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Main'

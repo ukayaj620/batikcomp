@@ -1,157 +1,165 @@
 object FormMain: TFormMain
-  Left = 419
-  Height = 726
-  Top = 159
-  Width = 1400
+  Left = 131
+  Height = 871
+  Top = 39
+  Width = 1680
   Caption = 'JAYAKU | JASON | KEVIN | BATIKCOMP'
-  ClientHeight = 726
-  ClientWidth = 1400
+  ClientHeight = 871
+  ClientWidth = 1680
   Color = clWhite
-  DesignTimePPI = 120
+  DesignTimePPI = 144
   OnCreate = FormCreate
   LCLVersion = '2.0.10.0'
   object PageControl: TPageControl
     Left = 0
-    Height = 726
+    Height = 871
     Top = 0
-    Width = 1402
-    ActivePage = TabSheet3
-    TabIndex = 2
+    Width = 1682
+    ActivePage = TabSheet1
+    ParentFont = False
+    TabIndex = 0
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Main'
-      ClientHeight = 693
-      ClientWidth = 1394
+      ClientHeight = 833
+      ClientWidth = 1674
+      ParentFont = False
       object ImageTexture1: TImage
-        Left = 353
-        Height = 112
-        Top = 16
-        Width = 112
+        Left = 552
+        Height = 134
+        Top = 19
+        Width = 134
       end
       object ImageTexture2: TImage
-        Left = 679
-        Height = 112
-        Top = 16
-        Width = 112
+        Left = 552
+        Height = 134
+        Top = 384
+        Width = 134
       end
       object ImagePattern2: TImage
-        Left = 1013
-        Height = 112
-        Top = 16
-        Width = 112
+        Left = 40
+        Height = 134
+        Top = 384
+        Width = 134
       end
       object ButtonPattern1: TButton
-        Left = 33
-        Height = 32
-        Top = 329
-        Width = 94
+        Left = 376
+        Height = 38
+        Top = 19
+        Width = 113
         Caption = 'Load Pattern'
         OnClick = ButtonPattern1Click
         ParentFont = False
         TabOrder = 0
       end
       object ButtonTexture1: TButton
-        Left = 353
-        Height = 32
-        Top = 329
-        Width = 94
+        Left = 912
+        Height = 38
+        Top = 19
+        Width = 152
         Caption = 'Load Texture'
         OnClick = ButtonTexture1Click
         ParentFont = False
         TabOrder = 1
       end
       object ButtonBackground: TButton
-        Left = 679
-        Height = 32
-        Top = 329
-        Width = 127
+        Left = 912
+        Height = 38
+        Top = 384
+        Width = 152
         Caption = 'Load Background'
         OnClick = ButtonBackgroundClick
         ParentFont = False
         TabOrder = 2
       end
       object ButtonPattern2: TButton
-        Left = 1013
-        Height = 32
-        Top = 329
-        Width = 94
+        Left = 376
+        Height = 38
+        Top = 384
+        Width = 113
         Caption = 'Load Pattern'
         OnClick = ButtonPattern2Click
         ParentFont = False
         TabOrder = 3
       end
       object ImageResult: TImage
-        Left = 679
-        Height = 112
-        Top = 375
-        Width = 112
+        Left = 1152
+        Height = 134
+        Top = 19
+        Width = 134
       end
       object ButtonExecute: TButton
-        Left = 1013
-        Height = 32
-        Top = 375
-        Width = 94
+        Left = 1152
+        Height = 38
+        Top = 384
+        Width = 113
         Caption = 'Execute'
         OnClick = ButtonExecuteClick
         ParentFont = False
         TabOrder = 4
       end
       object ButtonSave: TButton
-        Left = 1013
-        Height = 32
-        Top = 429
-        Width = 94
+        Left = 1320
+        Height = 38
+        Top = 384
+        Width = 113
         Caption = 'Save'
         OnClick = ButtonSaveClick
         ParentFont = False
         TabOrder = 5
       end
       object EditBinarization: TEdit
-        Left = 146
-        Height = 28
-        Top = 329
-        Width = 100
+        Left = 376
+        Height = 33
+        Top = 104
+        Width = 113
         ParentFont = False
         TabOrder = 6
         Text = '0'
       end
       object ImagePattern1: TImage
-        Left = 33
-        Height = 112
-        Top = 16
-        Width = 112
+        Left = 40
+        Height = 134
+        Top = 19
+        Width = 134
       end
-    end
-    object TabSheet2: TTabSheet
-      Caption = 'Sub'
+      object Label6: TLabel
+        Left = 376
+        Height = 25
+        Top = 72
+        Width = 82
+        Caption = 'Threshold:'
+        ParentColor = False
+      end
     end
     object TabSheet3: TTabSheet
       Caption = 'About'
-      ClientHeight = 693
-      ClientWidth = 1394
+      ClientHeight = 833
+      ClientWidth = 1674
+      ParentFont = False
       object Panel1: TPanel
-        Left = 384
-        Height = 276
-        Top = 128
-        Width = 550
+        Left = 496
+        Height = 331
+        Top = 48
+        Width = 660
         BevelColor = clSilver
         BevelInner = bvSpace
         BevelOuter = bvSpace
-        ClientHeight = 276
-        ClientWidth = 550
+        ClientHeight = 331
+        ClientWidth = 660
         Color = clWhite
         ParentColor = False
         ParentFont = False
         TabOrder = 0
         object Label1: TLabel
-          Left = 26
-          Height = 54
-          Top = 20
-          Width = 216
+          Left = 31
+          Height = 65
+          Top = 24
+          Width = 255
           Caption = 'Developer:'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -37
+          Font.Height = -44
           Font.Name = 'Sitka Small'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -160,14 +168,14 @@ object FormMain: TFormMain
           ParentFont = False
         end
         object Label2: TLabel
-          Left = 27
-          Height = 33
-          Top = 87
-          Width = 351
+          Left = 32
+          Height = 40
+          Top = 104
+          Width = 426
           Caption = '- Jayaku Briliantio (32180088)'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -23
+          Font.Height = -28
           Font.Name = 'Sitka Text'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -176,14 +184,14 @@ object FormMain: TFormMain
           ParentFont = False
         end
         object Label3: TLabel
-          Left = 27
-          Height = 33
-          Top = 133
-          Width = 340
+          Left = 32
+          Height = 40
+          Top = 160
+          Width = 411
           Caption = '- Jason Alexander (32180082)'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -23
+          Font.Height = -28
           Font.Name = 'Sitka Text'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -192,14 +200,14 @@ object FormMain: TFormMain
           ParentFont = False
         end
         object Label4: TLabel
-          Left = 26
-          Height = 33
-          Top = 180
-          Width = 306
+          Left = 31
+          Height = 40
+          Top = 216
+          Width = 368
           Caption = '- Kevin Hosea (321800114)'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -23
+          Font.Height = -28
           Font.Name = 'Sitka Text'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -208,14 +216,14 @@ object FormMain: TFormMain
           ParentFont = False
         end
         object Label5: TLabel
-          Left = 26
-          Height = 33
-          Top = 224
-          Width = 399
+          Left = 31
+          Height = 40
+          Top = 269
+          Width = 485
           Caption = 'Built with LOVE using Lazarus IDE'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -23
+          Font.Height = -28
           Font.Name = 'Sitka Text'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -225,10 +233,10 @@ object FormMain: TFormMain
         end
       end
       object Image1: TImage
-        Left = 504
-        Height = 218
-        Top = 416
-        Width = 300
+        Left = 672
+        Height = 222
+        Top = 472
+        Width = 299
         Picture.Data = {
           07544269746D61709EFE0200424D9EFE02000000000036000000280000002C01
           0000DA000000010018000000000068FE02007412000074120000000000000000
@@ -6369,11 +6377,11 @@ object FormMain: TFormMain
     end
   end
   object SavePictureDialog1: TSavePictureDialog
-    Left = 1270
-    Top = 48
+    Left = 1524
+    Top = 58
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 1273
-    Top = 115
+    Left = 1528
+    Top = 138
   end
 end

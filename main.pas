@@ -45,6 +45,7 @@ type
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
+    Label6: TLabel;
     OpenPictureDialog1: TOpenPictureDialog;
     PageControl: TPageControl;
     Panel1: TPanel;

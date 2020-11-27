@@ -15,9 +15,9 @@ object FormMain: TFormMain
     Height = 927
     Top = 0
     Width = 1856
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     ParentFont = False
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Main'
@@ -133,7 +133,7 @@ object FormMain: TFormMain
         ItemIndex = 0
         Items.Strings = (
           'Process Bunga'
-          'Process Pola'
+          'Process Ceramic'
         )
         TabOrder = 6
       end

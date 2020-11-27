@@ -160,7 +160,7 @@ begin
 
   Texture1HPFMultiplyPattern1AndPattern2:= ArithmeticMultiply(BinaryToGrayscale(Pattern1AndPattern2), Texture1HPF);
 
-  Pattern1AndPattern2MultiplyTexture2:= ArithmeticMultiply(BinaryToGrayscale(Invers(Pattern1AndPattern2)), BitmapTexture2);
+  Pattern1AndPattern2MultiplyTexture2:= ArithmeticMultiply(BinaryToGrayscale(Invers(Pattern1AndPattern2)), Convolution(BitmapTexture2, HPFKernel));
 
   SubFinal:= ArithmeticAddition(Pattern1AndPattern2MultiplyTexture2, Texture1HPFMultiplyPattern1AndPattern2);
   Pattern2CompassBinary:= Binarization(EdgeDetection(Grayscaling(BitmapPattern2), CompassKernel(), 4), 169);

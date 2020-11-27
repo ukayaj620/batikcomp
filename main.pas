@@ -72,11 +72,11 @@ type
     function PaddingBitmap(bitmap: BitmapColor): BitmapColor;
     function PaddingBitmap(bitmap: BitmapGrayscale): BitmapGrayscale;
     function PaddingBitmap(bitmap: BitmapBinary): BitmapBinary;
-    function Convolution(padBitmap: BitmapColor; K: Kernel): BitmapColor;
+    function Convolution(bitmap: BitmapColor; K: Kernel): BitmapColor;
     function CompassKernel(): FourWays;
-    function EdgeDetection(padBitmap: BitmapGrayscale; K: FourWays; ways: Integer): BitmapGrayscale;
-    function Dilation(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
-    function Erosion(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
+    function EdgeDetection(bitmap: BitmapGrayscale; K: FourWays; ways: Integer): BitmapGrayscale;
+    function Dilation(bitmap: BitmapBinary; loop: Integer): BitmapBinary;
+    function Erosion(bitmap: BitmapBinary; loop: Integer): BitmapBinary;
     function BoolToByte(value: Boolean): Byte;
     function BinaryToGrayscale(bitmap: BitmapBinary): BitmapGrayscale;
     function ArithmeticAnd(bitmap1: BitmapBinary; bitmap2: BitmapBinary): BitmapBinary;
@@ -148,22 +148,22 @@ var
   SubFinal, Final: BitmapColor;
 begin
   if RadioGroupPattern.ItemIndex = 1 then
-    Pattern1Compass:= EdgeDetection(PaddingBitmap(BinaryToGrayscale(Erosion(Dilation(Invers(Binarization(Grayscaling(BitmapPattern1), 148)), 2), 2))), CompassKernel(), 4)
+    Pattern1Compass:= EdgeDetection(BinaryToGrayscale(Erosion(Dilation(Invers(Binarization(Grayscaling(BitmapPattern1), 148)), 2), 2)), CompassKernel(), 4)
   else
-    Pattern1Compass:= BinaryToGrayscale(Binarization(EdgeDetection(PaddingBitmap(Grayscaling(BitmapPattern1)), CompassKernel(), 4), 127));
+    Pattern1Compass:= BinaryToGrayscale(Binarization(EdgeDetection(Grayscaling(BitmapPattern1), CompassKernel(), 4), 127));
 
   Pattern2Binary:= Binarization(Grayscaling(BitmapPattern2), 229);
 
   Pattern1AndPattern2:= ArithmeticAnd(Binarization(Pattern1Compass, 127), Pattern2Binary);
 
-  Texture1HPF:= Convolution(PaddingBitmap(Convolution(PaddingBitmap(BitmapTexture1), LPFKernel)), HPFKernel);
+  Texture1HPF:= Convolution(Convolution(BitmapTexture1, LPFKernel), HPFKernel);
 
   Texture1HPFMultiplyPattern1AndPattern2:= ArithmeticMultiply(BinaryToGrayscale(Pattern1AndPattern2), Texture1HPF);
 
   Pattern1AndPattern2MultiplyTexture2:= ArithmeticMultiply(BinaryToGrayscale(Invers(Pattern1AndPattern2)), BitmapTexture2);
 
   SubFinal:= ArithmeticAddition(Pattern1AndPattern2MultiplyTexture2, Texture1HPFMultiplyPattern1AndPattern2);
-  Pattern2CompassBinary:= Binarization(EdgeDetection(PaddingBitmap(Grayscaling(BitmapPattern2)), CompassKernel(), 4), 169);
+  Pattern2CompassBinary:= Binarization(EdgeDetection(Grayscaling(BitmapPattern2), CompassKernel(), 4), 169);
   Final:= ArithmeticAddition(SubFinal, BinaryToGrayscale(Pattern2CompassBinary));
 
   ShowImageFromBitmap(Final);
@@ -391,13 +391,15 @@ begin
   PaddingBitmap:= BitmapTemp;
 end;
 
-function TFormMain.Convolution(padBitmap: BitmapColor; K: Kernel): BitmapColor;
+function TFormMain.Convolution(bitmap: BitmapColor; K: Kernel): BitmapColor;
 var
   x, y: Integer;
   kx, ky: Integer;
   ResultBitmap: BitmapColor;
   pixel: ChannelDouble;
+  padBitmap: BitmapColor;
 begin
+  padBitmap:= PaddingBitmap(bitmap);
   for y:= 1 to imageHeight do
   begin
     for x:= 1 to imageWidth do
@@ -422,13 +424,15 @@ begin
   Convolution:= ResultBitmap;
 end;
 
-function TFormMain.EdgeDetection(padBitmap: BitmapGrayscale; K: FourWays; ways: Integer): BitmapGrayscale;
+function TFormMain.EdgeDetection(bitmap: BitmapGrayscale; K: FourWays; ways: Integer): BitmapGrayscale;
 var
   ResultBitmap: BitmapGrayscale;
   grays: array[1..4] of Integer;
   way, gray: Integer;
   x, y, kx, ky: Integer;
+  padBitmap: BitmapGrayscale;
 begin
+  padBitmap:= PaddingBitmap(bitmap);
   for y:= 1 to imageHeight do
   begin
     for x:= 1 to imageWidth do
@@ -481,7 +485,7 @@ begin
   CompassKernel:= K;
 end;
 
-function TFormMain.Dilation(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
+function TFormMain.Dilation(bitmap: BitmapBinary; loop: Integer): BitmapBinary;
 var
   x, y: Integer;
   kx, ky: Integer;
@@ -489,7 +493,7 @@ var
   BitmapTemp: BitmapBinary;
   BitmapInput: BitmapBinary;
 begin
-  BitmapInput:= PaddingBitmap(padBitmap);
+  BitmapInput:= PaddingBitmap(bitmap);
   for m:= 1 to loop do
   begin
     for y:= 1 to imageHeight do
@@ -511,7 +515,7 @@ begin
   Dilation:= BitmapInput;
 end;
 
-function TFormMain.Erosion(padBitmap: BitmapBinary; loop: Integer): BitmapBinary;
+function TFormMain.Erosion(bitmap: BitmapBinary; loop: Integer): BitmapBinary;
 var
   x, y: Integer;
   kx, ky: Integer;
@@ -519,7 +523,7 @@ var
   BitmapTemp: BitmapBinary;
   BitmapInput: BitmapBinary;
 begin
-  BitmapInput:= padBitmap;
+  BitmapInput:= PaddingBitmap(bitmap);
   for m:= 1 to loop do
   begin
     for y:= 1 to imageHeight do
@@ -536,7 +540,7 @@ begin
         end;
       end;
     end;
-    BitmapInput:= BitmapTemp;
+    BitmapInput:= PaddingBitmap(BitmapTemp);
   end;
   Erosion:= BitmapInput;
 end;

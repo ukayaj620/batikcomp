@@ -3,7 +3,7 @@ object FormMain: TFormMain
   Height = 920
   Top = 24
   Width = 1850
-  Caption = 'JAYAKU | JASON | KEVIN | BATIKCOMP'
+  Caption = 'BATIKCOMP | JAYAKU | JASON | KEVIN |'
   ClientHeight = 920
   ClientWidth = 1850
   Color = clWhite
@@ -15,23 +15,23 @@ object FormMain: TFormMain
     Height = 927
     Top = 0
     Width = 1856
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     ParentFont = False
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     object TabSheet1: TTabSheet
-      Caption = 'Nature'
+      Caption = 'Main'
       ClientHeight = 889
       ClientWidth = 1848
       ParentFont = False
       object ImageTexture1: TImage
-        Left = 632
+        Left = 696
         Height = 134
         Top = 19
         Width = 134
       end
       object ImageTexture2: TImage
-        Left = 632
+        Left = 696
         Height = 134
         Top = 384
         Width = 134
@@ -53,7 +53,7 @@ object FormMain: TFormMain
         TabOrder = 0
       end
       object ButtonTexture1: TButton
-        Left = 1024
+        Left = 1056
         Height = 38
         Top = 19
         Width = 152
@@ -63,9 +63,9 @@ object FormMain: TFormMain
         TabOrder = 1
       end
       object ButtonBackground: TButton
-        Left = 1024
+        Left = 1056
         Height = 38
-        Top = 392
+        Top = 384
         Width = 152
         Caption = 'Load Background'
         OnClick = ButtonBackgroundClick
@@ -91,7 +91,7 @@ object FormMain: TFormMain
       object ButtonExecute: TButton
         Left = 1264
         Height = 38
-        Top = 392
+        Top = 384
         Width = 113
         Caption = 'Execute'
         OnClick = ButtonExecuteClick
@@ -99,23 +99,14 @@ object FormMain: TFormMain
         TabOrder = 4
       end
       object ButtonSave: TButton
-        Left = 1488
+        Left = 1472
         Height = 38
-        Top = 392
+        Top = 384
         Width = 113
         Caption = 'Save'
         OnClick = ButtonSaveClick
         ParentFont = False
         TabOrder = 5
-      end
-      object EditBinarization: TEdit
-        Left = 448
-        Height = 33
-        Top = 104
-        Width = 113
-        ParentFont = False
-        TabOrder = 6
-        Text = '0'
       end
       object ImagePattern1: TImage
         Left = 40
@@ -123,17 +114,29 @@ object FormMain: TFormMain
         Top = 19
         Width = 134
       end
-      object Label6: TLabel
+      object RadioGroupPattern: TRadioGroup
         Left = 448
-        Height = 25
-        Top = 72
-        Width = 82
-        Caption = 'Threshold:'
-        ParentColor = False
+        Height = 126
+        Top = 96
+        Width = 192
+        AutoFill = True
+        Caption = 'Process Pattern'
+        ChildSizing.LeftRightSpacing = 6
+        ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+        ChildSizing.EnlargeVertical = crsHomogenousChildResize
+        ChildSizing.ShrinkHorizontal = crsScaleChilds
+        ChildSizing.ShrinkVertical = crsScaleChilds
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 96
+        ClientWidth = 188
+        ItemIndex = 0
+        Items.Strings = (
+          'Process Bunga'
+          'Process Pola'
+        )
+        TabOrder = 6
       end
-    end
-    object TabSheet2: TTabSheet
-      Caption = 'Pattern'
     end
     object TabSheet3: TTabSheet
       Caption = 'About'
@@ -141,7 +144,7 @@ object FormMain: TFormMain
       ClientWidth = 1848
       ParentFont = False
       object Panel1: TPanel
-        Left = 496
+        Left = 608
         Height = 331
         Top = 48
         Width = 660
@@ -236,9 +239,9 @@ object FormMain: TFormMain
         end
       end
       object Image1: TImage
-        Left = 672
+        Left = 784
         Height = 222
-        Top = 472
+        Top = 464
         Width = 299
         Picture.Data = {
           07544269746D61709EFE0200424D9EFE02000000000036000000280000002C01

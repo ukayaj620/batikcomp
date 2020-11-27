@@ -1,37 +1,37 @@
 object FormMain: TFormMain
-  Left = 131
-  Height = 871
-  Top = 39
-  Width = 1680
+  Left = 29
+  Height = 920
+  Top = 24
+  Width = 1850
   Caption = 'JAYAKU | JASON | KEVIN | BATIKCOMP'
-  ClientHeight = 871
-  ClientWidth = 1680
+  ClientHeight = 920
+  ClientWidth = 1850
   Color = clWhite
   DesignTimePPI = 144
   OnCreate = FormCreate
   LCLVersion = '2.0.10.0'
   object PageControl: TPageControl
     Left = 0
-    Height = 871
+    Height = 927
     Top = 0
-    Width = 1682
-    ActivePage = TabSheet2
+    Width = 1856
+    ActivePage = TabSheet1
     ParentFont = False
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Nature'
-      ClientHeight = 833
-      ClientWidth = 1674
+      ClientHeight = 889
+      ClientWidth = 1848
       ParentFont = False
       object ImageTexture1: TImage
-        Left = 552
+        Left = 632
         Height = 134
         Top = 19
         Width = 134
       end
       object ImageTexture2: TImage
-        Left = 552
+        Left = 632
         Height = 134
         Top = 384
         Width = 134
@@ -43,7 +43,7 @@ object FormMain: TFormMain
         Width = 134
       end
       object ButtonPattern1: TButton
-        Left = 376
+        Left = 448
         Height = 38
         Top = 19
         Width = 113
@@ -53,7 +53,7 @@ object FormMain: TFormMain
         TabOrder = 0
       end
       object ButtonTexture1: TButton
-        Left = 912
+        Left = 1024
         Height = 38
         Top = 19
         Width = 152
@@ -63,9 +63,9 @@ object FormMain: TFormMain
         TabOrder = 1
       end
       object ButtonBackground: TButton
-        Left = 912
+        Left = 1024
         Height = 38
-        Top = 384
+        Top = 392
         Width = 152
         Caption = 'Load Background'
         OnClick = ButtonBackgroundClick
@@ -73,7 +73,7 @@ object FormMain: TFormMain
         TabOrder = 2
       end
       object ButtonPattern2: TButton
-        Left = 376
+        Left = 448
         Height = 38
         Top = 384
         Width = 113
@@ -83,15 +83,15 @@ object FormMain: TFormMain
         TabOrder = 3
       end
       object ImageResult: TImage
-        Left = 1152
+        Left = 1264
         Height = 134
         Top = 19
         Width = 134
       end
       object ButtonExecute: TButton
-        Left = 1152
+        Left = 1264
         Height = 38
-        Top = 384
+        Top = 392
         Width = 113
         Caption = 'Execute'
         OnClick = ButtonExecuteClick
@@ -99,9 +99,9 @@ object FormMain: TFormMain
         TabOrder = 4
       end
       object ButtonSave: TButton
-        Left = 1320
+        Left = 1488
         Height = 38
-        Top = 384
+        Top = 392
         Width = 113
         Caption = 'Save'
         OnClick = ButtonSaveClick
@@ -109,7 +109,7 @@ object FormMain: TFormMain
         TabOrder = 5
       end
       object EditBinarization: TEdit
-        Left = 376
+        Left = 448
         Height = 33
         Top = 104
         Width = 113
@@ -124,7 +124,7 @@ object FormMain: TFormMain
         Width = 134
       end
       object Label6: TLabel
-        Left = 376
+        Left = 448
         Height = 25
         Top = 72
         Width = 82
@@ -137,8 +137,8 @@ object FormMain: TFormMain
     end
     object TabSheet3: TTabSheet
       Caption = 'About'
-      ClientHeight = 833
-      ClientWidth = 1674
+      ClientHeight = 889
+      ClientWidth = 1848
       ParentFont = False
       object Panel1: TPanel
         Left = 496
@@ -6380,11 +6380,11 @@ object FormMain: TFormMain
     end
   end
   object SavePictureDialog1: TSavePictureDialog
-    Left = 1524
-    Top = 58
+    Left = 1760
+    Top = 520
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 1528
-    Top = 138
+    Left = 1760
+    Top = 704
   end
 end

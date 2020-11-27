@@ -1,7 +1,7 @@
 object FormMain: TFormMain
-  Left = 425
+  Left = 419
   Height = 726
-  Top = 155
+  Top = 159
   Width = 1400
   Caption = 'JAYAKU | JASON | KEVIN | BATIKCOMP'
   ClientHeight = 726
@@ -16,36 +16,34 @@ object FormMain: TFormMain
     Top = 0
     Width = 1402
     ActivePage = TabSheet1
-    ParentFont = False
     TabIndex = 0
     TabOrder = 0
     object TabSheet1: TTabSheet
-      Caption = 'Nature'
+      Caption = 'Main'
       ClientHeight = 693
       ClientWidth = 1394
-      ParentFont = False
       object ImageTexture1: TImage
-        Left = 460
+        Left = 353
         Height = 112
         Top = 16
         Width = 112
       end
       object ImageTexture2: TImage
-        Left = 460
+        Left = 679
         Height = 112
-        Top = 320
+        Top = 16
         Width = 112
       end
       object ImagePattern2: TImage
-        Left = 33
+        Left = 1013
         Height = 112
-        Top = 320
+        Top = 16
         Width = 112
       end
       object ButtonPattern1: TButton
-        Left = 313
+        Left = 33
         Height = 32
-        Top = 16
+        Top = 329
         Width = 94
         Caption = 'Load Pattern'
         OnClick = ButtonPattern1Click
@@ -53,19 +51,19 @@ object FormMain: TFormMain
         TabOrder = 0
       end
       object ButtonTexture1: TButton
-        Left = 760
+        Left = 353
         Height = 32
-        Top = 16
-        Width = 127
+        Top = 329
+        Width = 94
         Caption = 'Load Texture'
         OnClick = ButtonTexture1Click
         ParentFont = False
         TabOrder = 1
       end
       object ButtonBackground: TButton
-        Left = 760
+        Left = 679
         Height = 32
-        Top = 320
+        Top = 329
         Width = 127
         Caption = 'Load Background'
         OnClick = ButtonBackgroundClick
@@ -73,9 +71,9 @@ object FormMain: TFormMain
         TabOrder = 2
       end
       object ButtonPattern2: TButton
-        Left = 313
+        Left = 1013
         Height = 32
-        Top = 320
+        Top = 329
         Width = 94
         Caption = 'Load Pattern'
         OnClick = ButtonPattern2Click
@@ -83,15 +81,15 @@ object FormMain: TFormMain
         TabOrder = 3
       end
       object ImageResult: TImage
-        Left = 960
+        Left = 679
         Height = 112
-        Top = 16
+        Top = 375
         Width = 112
       end
       object ButtonExecute: TButton
-        Left = 960
+        Left = 1013
         Height = 32
-        Top = 320
+        Top = 375
         Width = 94
         Caption = 'Execute'
         OnClick = ButtonExecuteClick
@@ -99,9 +97,9 @@ object FormMain: TFormMain
         TabOrder = 4
       end
       object ButtonSave: TButton
-        Left = 1100
+        Left = 1013
         Height = 32
-        Top = 320
+        Top = 429
         Width = 94
         Caption = 'Save'
         OnClick = ButtonSaveClick
@@ -109,10 +107,10 @@ object FormMain: TFormMain
         TabOrder = 5
       end
       object EditBinarization: TEdit
-        Left = 313
+        Left = 146
         Height = 28
-        Top = 87
-        Width = 94
+        Top = 329
+        Width = 100
         ParentFont = False
         TabOrder = 6
         Text = '0'
@@ -123,29 +121,18 @@ object FormMain: TFormMain
         Top = 16
         Width = 112
       end
-      object Label6: TLabel
-        Left = 313
-        Height = 20
-        Top = 60
-        Width = 68
-        Caption = 'Threshold:'
-        ParentColor = False
-        ParentFont = False
-      end
     end
     object TabSheet2: TTabSheet
-      Caption = 'Pattern'
-      ParentFont = False
+      Caption = 'Sub'
     end
     object TabSheet3: TTabSheet
       Caption = 'About'
-      ClientHeight = 833
-      ClientWidth = 1674
-      ParentFont = False
+      ClientHeight = 693
+      ClientWidth = 1394
       object Panel1: TPanel
-        Left = 413
+        Left = 384
         Height = 276
-        Top = 40
+        Top = 128
         Width = 550
         BevelColor = clSilver
         BevelInner = bvSpace
@@ -158,9 +145,9 @@ object FormMain: TFormMain
         TabOrder = 0
         object Label1: TLabel
           Left = 26
-          Height = 65
+          Height = 54
           Top = 20
-          Width = 255
+          Width = 216
           Caption = 'Developer:'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
@@ -174,9 +161,9 @@ object FormMain: TFormMain
         end
         object Label2: TLabel
           Left = 27
-          Height = 40
+          Height = 33
           Top = 87
-          Width = 426
+          Width = 351
           Caption = '- Jayaku Briliantio (32180088)'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
@@ -190,9 +177,9 @@ object FormMain: TFormMain
         end
         object Label3: TLabel
           Left = 27
-          Height = 40
+          Height = 33
           Top = 133
-          Width = 411
+          Width = 340
           Caption = '- Jason Alexander (32180082)'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
@@ -206,9 +193,9 @@ object FormMain: TFormMain
         end
         object Label4: TLabel
           Left = 26
-          Height = 40
+          Height = 33
           Top = 180
-          Width = 368
+          Width = 306
           Caption = '- Kevin Hosea (321800114)'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
@@ -222,9 +209,9 @@ object FormMain: TFormMain
         end
         object Label5: TLabel
           Left = 26
-          Height = 40
+          Height = 33
           Top = 224
-          Width = 485
+          Width = 399
           Caption = 'Built with LOVE using Lazarus IDE'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
@@ -238,10 +225,10 @@ object FormMain: TFormMain
         end
       end
       object Image1: TImage
-        Left = 560
-        Height = 185
-        Top = 393
-        Width = 249
+        Left = 504
+        Height = 218
+        Top = 416
+        Width = 300
         Picture.Data = {
           07544269746D61709EFE0200424D9EFE02000000000036000000280000002C01
           0000DA000000010018000000000068FE02007412000074120000000000000000

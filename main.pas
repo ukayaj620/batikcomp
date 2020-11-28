@@ -200,9 +200,9 @@ var
   x, y: Integer;
   bitmap: BitmapColor;
 begin
-  for y:= 1 to imageWidth do
+  for y:= 1 to imageHeight do
   begin
-    for x:= 1 to imageHeight do
+    for x:= 1 to imageWidth do
     begin
       bitmap[x, y].R:= GetRValue(image.Canvas.Pixels[x-1, y-1]);
       bitmap[x, y].G:= GetGValue(image.Canvas.Pixels[x-1, y-1]);
@@ -231,9 +231,9 @@ procedure TFormMain.ShowImageFromBitmap(bitmap: BitmapColor);
 var
   x, y: Integer;
 begin
-  for y:= 1 to imageWidth do
+  for y:= 1 to imageHeight do
   begin
-    for x:= 1 to imageHeight do
+    for x:= 1 to imageWidth do
     begin
       ImageResult.Canvas.Pixels[x-1, y-1]:= RGB(bitmap[x, y].R, bitmap[x, y].G, bitmap[x, y].B);
     end;
@@ -244,9 +244,9 @@ procedure TFormMain.ShowImageFromBitmap(bitmap: BitmapGrayscale);
 var
   x, y: Integer;
 begin
-  for y:= 1 to imageWidth do
+  for y:= 1 to imageHeight do
   begin
-    for x:= 1 to imageHeight do
+    for x:= 1 to imageWidth do
     begin
       ImageResult.Canvas.Pixels[x-1, y-1]:= RGB(bitmap[x, y], bitmap[x, y], bitmap[x, y]);
     end;
@@ -258,9 +258,9 @@ var
   x, y: Integer;
   pixel: Byte;
 begin
-  for y:= 1 to imageWidth do
+  for y:= 1 to imageHeight do
   begin
-    for x:= 1 to imageHeight do
+    for x:= 1 to imageWidth do
     begin
       pixel:= BoolToByte(bitmap[x, y]) * 255;
       ImageResult.Canvas.Pixels[x-1, y-1]:= RGB(pixel, pixel, pixel);

@@ -35,8 +35,8 @@ type
     ButtonSave: TButton;
     Image1: TImage;
     ImagePattern1: TImage;
-    ImageTexture1: TImage;
-    ImageTexture2: TImage;
+    ImageTexture: TImage;
+    ImageBackground: TImage;
     ImagePattern2: TImage;
     ImageResult: TImage;
     Label1: TLabel;
@@ -102,7 +102,7 @@ uses
   windows;
 
 var
-  BitmapPattern1, BitmapTexture1, BitmapTexture2, BitmapPattern2: BitmapColor;
+  BitmapPattern1, BitmapTexture, BitmapBackground, BitmapPattern2: BitmapColor;
   imageWidth: Integer = 300;
   imageHeight: Integer = 300;
   LPFKernel: Kernel = ((1/9, 1/9, 1/9), (1/9, 1/9, 1/9), (1/9, 1/9, 1/9));
@@ -140,10 +140,10 @@ end;
 // EXECUTION
 procedure TFormMain.ButtonExecuteClick(Sender: TObject);
 var
-  Pattern1Compass: BitmapGrayscale;
-  Pattern2Binary, Pattern1AndPattern2, Pattern2CompassBinary: BitmapBinary;
-  Texture1HPF: BitmapColor;
-  Texture1HPFMultiplyPattern1AndPattern2: BitmapColor;
+  Pattern1Compass, Pattern2CompassBinary: BitmapGrayscale;
+  Pattern2Binary, Pattern1AndPattern2: BitmapBinary;
+  Texture1Embose: BitmapColor;
+  Texture1EmboseMultiplyPattern1AndPattern2: BitmapColor;
   Pattern1AndPattern2MultiplyTexture2: BitmapColor;
   SubFinal, Final: BitmapColor;
 begin
@@ -156,15 +156,15 @@ begin
 
   Pattern1AndPattern2:= ArithmeticAnd(Binarization(Pattern1Compass, 127), Pattern2Binary);
 
-  Texture1HPF:= Convolution(Convolution(BitmapTexture1, LPFKernel), HPFKernel);
+  Texture1Embose:= Convolution(Convolution(BitmapTexture, LPFKernel), HPFKernel);
 
-  Texture1HPFMultiplyPattern1AndPattern2:= ArithmeticMultiply(BinaryToGrayscale(Pattern1AndPattern2), Texture1HPF);
+  Texture1EmboseMultiplyPattern1AndPattern2:= ArithmeticMultiply(BinaryToGrayscale(Pattern1AndPattern2), Texture1Embose);
 
-  Pattern1AndPattern2MultiplyTexture2:= ArithmeticMultiply(BinaryToGrayscale(Invers(Pattern1AndPattern2)), Convolution(BitmapTexture2, HPFKernel));
+  Pattern1AndPattern2MultiplyTexture2:= ArithmeticMultiply(BinaryToGrayscale(Invers(Pattern1AndPattern2)), Convolution(BitmapBackground, HPFKernel));
 
-  SubFinal:= ArithmeticAddition(Pattern1AndPattern2MultiplyTexture2, Texture1HPFMultiplyPattern1AndPattern2);
-  Pattern2CompassBinary:= Binarization(EdgeDetection(Grayscaling(BitmapPattern2), CompassKernel(), 4), 169);
-  Final:= ArithmeticAddition(SubFinal, BinaryToGrayscale(Pattern2CompassBinary));
+  SubFinal:= ArithmeticAddition(Pattern1AndPattern2MultiplyTexture2, Texture1EmboseMultiplyPattern1AndPattern2);
+  Pattern2CompassBinary:= BinaryToGrayscale(Binarization(EdgeDetection(Grayscaling(BitmapPattern2), CompassKernel(), 4), 169));
+  Final:= ArithmeticAddition(SubFinal, Pattern2CompassBinary);
 
   ShowImageFromBitmap(Final);
 end;
@@ -173,9 +173,9 @@ procedure TFormMain.ButtonTexture1Click(Sender: TObject);
 begin
   if OpenPictureDialog1.Execute then
   begin
-    ImageTexture1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+    ImageTexture.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 
-    BitmapTexture1:= InitImageBitmap(ImageTexture1);
+    BitmapTexture:= InitImageBitmap(ImageTexture);
   end;
 end;
 
@@ -183,9 +183,9 @@ procedure TFormMain.ButtonBackgroundClick(Sender: TObject);
 begin
   if OpenPictureDialog1.Execute then
   begin
-    ImageTexture2.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+    ImageBackground.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 
-    BitmapTexture2:= InitImageBitmap(ImageTexture2);
+    BitmapBackground:= InitImageBitmap(ImageBackground);
   end;
 end;
 
@@ -215,14 +215,14 @@ end;
 procedure TFormMain.InitImageDimension(imgWidth: Integer; imgHeight: Integer);
 begin
   ImagePattern1.Width:= imgWidth;
-  ImageTexture1.Width:= imgWidth;
-  ImageTexture2.Width:= imgWidth;
+  ImageTexture.Width:= imgWidth;
+  ImageBackground.Width:= imgWidth;
   ImagePattern2.Width:= imgWidth;
   ImageResult.Width:= imgWidth;
 
   ImagePattern1.Height:= imgHeight;
-  ImageTexture1.Height:= imgHeight;
-  ImageTexture2.Height:= imgHeight;
+  ImageTexture.Height:= imgHeight;
+  ImageBackground.Height:= imgHeight;
   ImagePattern2.Height:= imgHeight;
   ImageResult.Height:= imgHeight;
 end;

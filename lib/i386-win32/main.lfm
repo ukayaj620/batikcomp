@@ -15,22 +15,22 @@ object FormMain: TFormMain
     Height = 927
     Top = 0
     Width = 1856
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     ParentFont = False
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Main'
       ClientHeight = 889
       ClientWidth = 1848
       ParentFont = False
-      object ImageTexture1: TImage
+      object ImageTexture: TImage
         Left = 696
         Height = 134
         Top = 19
         Width = 134
       end
-      object ImageTexture2: TImage
+      object ImageBackground: TImage
         Left = 696
         Height = 134
         Top = 384
@@ -99,7 +99,7 @@ object FormMain: TFormMain
         TabOrder = 4
       end
       object ButtonSave: TButton
-        Left = 1472
+        Left = 1456
         Height = 38
         Top = 384
         Width = 113
@@ -133,7 +133,7 @@ object FormMain: TFormMain
         ItemIndex = 0
         Items.Strings = (
           'Process Bunga'
-          'Process Pola'
+          'Process Ceramic'
         )
         TabOrder = 6
       end
